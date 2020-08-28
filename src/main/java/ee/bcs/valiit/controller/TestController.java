@@ -261,14 +261,28 @@ public class TestController {
     @GetMapping("/faktoriaal2")//REQUEST PARAM-IGA EELMISTELE
     public int faktoriaal2(@RequestParam("nr") int x) {
 
-
         return Lesson3.factorial(x);
 
+        }
+
+    @GetMapping("/morse")//REQUEST PARAM-IGA EELMISTELE
+    public String morse (@RequestParam("sõna") String x) {
+
+        return Lesson3Hard.morseCode(x);
+
+    }
+
+    @GetMapping("/paarisFibonacciLiidetud")
+    public int evenFibon (@RequestParam("kuni") int x) {
+
+        return Lesson3Hard.evenFibonacci(x);
+
+    }
+
 
 
         }
-        }
 
-///faktoriaal2?a=
+
 
 

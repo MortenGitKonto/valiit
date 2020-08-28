@@ -1,4 +1,4 @@
-package ee.bcs.valiit;
+package ee.bcs.valiit.controller;
 
 import java.util.HashMap;
 import java.util.Random;
