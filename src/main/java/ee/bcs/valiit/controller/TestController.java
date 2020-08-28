@@ -20,7 +20,7 @@ public class TestController {
         return fibonacci(element);
     }*/
 
-    ///////FIBONACCI/////////
+    ///////FIBONACCI/////////11111111111111
     //Fibonacci meetod parameetriga n
     public static int fibonacci(int n) { //OK
         // TODO
@@ -39,16 +39,59 @@ public class TestController {
         return element;
     }
 
+    ///////2ST ARVUST VÄIKSEM/////////222222222222222222222222
+    public static int min(int a, int b) {
+        // TODO tagasta a ja b väikseim väärtus
+        int min = 0;
+        if (a < b) {
+            min = a;
+        } else {
+            min = b;
+        }
+        return min;
+    }
 
-    ///////FIBONACCI/////////
+    ///////2ST ARVUST SUUREM/////////222222222222222222222222
+    public static int max(int a, int b) {
+        // TODO tagasta a ja b suurim väärtus
+        int max = 0;
+        if (a < b) {
+            max = b;
+        } else {
+            max = a;
+        }
+
+        return max;
+    }
+
+
+
 
     //Esimese osa mõtlen välja, see on fikseeritud. Teine osa {Fibonacci} on sissekirjutatav, et muuta lehe sisu
     @GetMapping("/Fiboarvutus/{Fibonacci}")
     //PathVariable peab olema sama mis {Fibonacci} getmappingus. Integer x deklareeritakse kui sissekirjutatud asi,
-    public Integer test(@PathVariable("Fibonacci") Integer x) {
-
+    public int test(@PathVariable("Fibonacci") int x) {
 
         //@RequestParam("fibonacciNth")Integer id
         return fibonacci(x); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
     }
+
+    @GetMapping("/min/{a}/{b}")
+    public int miinimum(@PathVariable("a") int x, @PathVariable("b") int y){
+
+        //@RequestParam("fibonacciNth")Integer id
+        return min(x, y); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+    @GetMapping("/max/{a}/{b}")
+    public int maksimum(@PathVariable("a") int x, @PathVariable("b") int y){
+
+        //@RequestParam("fibonacciNth")Integer id
+        return max(x, y); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+
+
+
+
 }
