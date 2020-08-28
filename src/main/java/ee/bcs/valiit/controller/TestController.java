@@ -2,6 +2,7 @@ package ee.bcs.valiit.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /*@RestController
@@ -19,6 +20,7 @@ public class TestController {
         int element = 5;
         return fibonacci(element);
     }*/
+
 
     ///////FIBONACCI/////////11111111111111
     //Fibonacci meetod parameetriga n
@@ -51,7 +53,7 @@ public class TestController {
         return min;
     }
 
-    ///////2ST ARVUST SUUREM/////////222222222222222222222222
+    ///////2ST ARVUST SUUREM/////////
     public static int max(int a, int b) {
         // TODO tagasta a ja b suurim väärtus
         int max = 0;
@@ -64,8 +66,109 @@ public class TestController {
         return max;
     }
 
+    ///////ABSOLUUT/////////
+    public static int abs(int a) {
+        // TODO tagasta a absoluut arv
+
+        if (a < 0) {
+            return -(a);
+        } else {
+            return a;
+        }
+    }
+
+    ///////PAARIS VÕI EI/////////
+    public static boolean isEven(int a) {
+        // TODO tagasta true, kui a on paaris arv
+        // tagasta false kui a on paaritu arv
+        return a % 2 == 0;
+    }
+
+    ///////3ST ARVUST VÄIKSEM/////////
+    public static int min(int a, int b, int c) {
+        // TODO tagasta a, b ja c väikseim väärtus
+        return min(a, min(b, c));
+    }
+
+    ///////3ST ARVUST SUUREM/////////
+    public static int max(int a, int b, int c) {
+        // TODO tagasta a, b ja c suurim väärtus
+        return max(a, max(b, c));
+
+    }
+
+    ///////PRIME ARVUD/////////
+    public static boolean isPrime(int x) {
+        // TODO tagasta kas sisestatud arv on primaar arv (jagub ainult 1 ja iseendaga)
+
+        for (int i = x - 1; i > 1; i--) {
+            if (x % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    ///////TAGURPIDI STRING/////////
+    public static String reverseString(String a) {
+        // TODO tagasta string tagurpidi
+        String tagurpidi = "";
+        String currentLetter = "";
+        int wordLength = a.length();
+        //System.out.println(wordLength);
+
+        for (int i = a.length() - 1; i >= 0; i--) {
+            currentLetter = a.substring(i, i + 1);
+            //System.out.println(currentLetter);
+            tagurpidi = tagurpidi + currentLetter;
+
+        }
+        System.out.println(tagurpidi);
+        return tagurpidi;
+    }
 
 
+/////////////TEE massiiv integeridest///////////////////
+
+    public static int[] makeArray(int a, int b, int c) {
+
+        int[] m = {a, b, c};
+        return (m);
+    }
+
+    /////////////LIIDA massiivi elemendid///////////////////
+
+    public static int sum(int[] x) {
+        // Todo liida kokku kõik numbrid massivis x
+        int sum = 0;
+        for (int i = 0; i < x.length; i++) {
+            sum = sum + x[i];
+            //System.out.println("Summa on: "+sum);
+        }
+        return sum;
+
+    }
+
+
+/////    GET MAPPINGUD   ///////
+
+    public static int[] sort(int[] a) {
+        // TODO sorteeri massiiv suuruse järgi
+        int temp;
+        for (int i = 1; i < a.length; i++) {
+            for (int j = i; j > 0; j--) {
+                if (a[j] < a[j - 1]) {
+                    temp = a[j];
+                    a[j] = a[j - 1];
+                    a[j - 1] = temp;
+                }
+            }
+        }
+        for (int i = 0; i < a.length; i++) {
+            //System.out.println(a[i]);
+        }
+        return a;
+    }
 
     //Esimese osa mõtlen välja, see on fikseeritud. Teine osa {Fibonacci} on sissekirjutatav, et muuta lehe sisu
     @GetMapping("/Fiboarvutus/{Fibonacci}")
@@ -77,21 +180,95 @@ public class TestController {
     }
 
     @GetMapping("/min/{a}/{b}")
-    public int miinimum(@PathVariable("a") int x, @PathVariable("b") int y){
+    public int miinimum(@PathVariable("a") int x, @PathVariable("b") int y) {
 
         //@RequestParam("fibonacciNth")Integer id
         return min(x, y); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
     }
 
     @GetMapping("/max/{a}/{b}")
-    public int maksimum(@PathVariable("a") int x, @PathVariable("b") int y){
+    public int maksimum(@PathVariable("a") int x, @PathVariable("b") int y) {
 
         //@RequestParam("fibonacciNth")Integer id
         return max(x, y); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
     }
 
+    @GetMapping("/abs/{a}")
+    public int absoluut(@PathVariable("a") int x) {
+
+        //@RequestParam("fibonacciNth")Integer id
+        return abs(x); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+    @GetMapping("/paaris/{a}")
+    public boolean paaris(@PathVariable("a") int x) {
+
+        //@RequestParam("fibonacciNth")Integer id
+        return isEven(x); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+    @GetMapping("/minkolmest/{a}/{b}/{c}")
+    public int miinimumKolmest(@PathVariable("a") int x, @PathVariable("b") int y, @PathVariable("c") int z) {
+
+        //@RequestParam("fibonacciNth")Integer id
+        return min(x, y, z); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+    @GetMapping("/maxkolmest/{a}/{b}/{c}")
+    public int maksimumKolmest(@PathVariable("a") int x, @PathVariable("b") int y, @PathVariable("c") int z) {
+
+        //@RequestParam("fibonacciNth")Integer id
+        return max(x, y, z); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+    @GetMapping("/prime/{a}")
+    public boolean prime(@PathVariable("a") int x) {
+
+        //@RequestParam("fibonacciNth")Integer id
+        return isPrime(x); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+    @GetMapping("/tagurpidi/{a}")
+    public String prime(@PathVariable("a") String x) {
+
+        //@RequestParam("fibonacciNth")Integer id
+        return reverseString(x); //kogu asi returnib sissekirjutatud osaga tehtava meetodi returnitud väärtuse.
+    }
+
+    @GetMapping("/3x1massiivigeneraator/{a}/{b}/{c}")
+    public int[] massiivigener(@PathVariable("a") int x, @PathVariable("b") int y, @PathVariable("c") int z) {
+
+        //@RequestParam("fibonacciNth")Integer id
+        return makeArray(x, y, z);
+    }
+
+    @GetMapping("/3x1massiivisumma/{a}/{b}/{c}")
+    public int massiivisumma(@PathVariable("a") int x, @PathVariable("b") int y, @PathVariable("c") int z) {
+
+        int[] m = makeArray(x, y, z);
+        return sum(m);
+    }
+
+    @GetMapping("/faktoriaal/{a}") //SARNASELT EELMISTELE
+    public int massiivisumma(@PathVariable("a") int x) {
+
+
+        return Lesson3.factorial(x);
+
+
+    }
+
+    @GetMapping("/faktoriaal2")//REQUEST PARAM-IGA EELMISTELE
+    public int faktoriaal2(@RequestParam("nr") int x) {
+
+
+        return Lesson3.factorial(x);
 
 
 
+        }
+        }
 
-}
+///faktoriaal2?a=
+
+
