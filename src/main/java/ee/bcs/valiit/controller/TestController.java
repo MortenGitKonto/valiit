@@ -306,15 +306,12 @@ public class TestController {
     //return employee;
 
 //Vaata listi
-    @GetMapping("/allemployees")
-    public List<Employee> employees() {
-        return employeeDtoTest();
-    }
 //Loo elemente listi
     @PostMapping("/addemployee")
     public void addEmployee(@RequestBody Employee employee) {
         employees.add(employee);
     }
+
 
     /*@PostMapping("/addemployeeindex/{a}")
     public void addEmployee(@RequestBody Employee employee, @PathVariable("a") int x) {
@@ -322,6 +319,12 @@ public class TestController {
         //System.out.println(employees);
 
     }*/
+
+    @PostMapping("/addemployeeindex/{a}")
+    public void addEmployee(@RequestBody Employee employee, @PathVariable("a") int x) {
+        employees.add(x, employee);
+        //System.out.println(employees);
+
 
 //Vaata listi indexil ...
     @GetMapping("/employee/{a}")

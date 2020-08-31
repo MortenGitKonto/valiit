@@ -44,18 +44,34 @@ public class BankController {
     }
 
 
-    //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-    //Loo accounte listi
+    /*
+        //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+        //Loo accounte listi
+        @PostMapping("/addbankaccount/{a}/{b}")
+        public void addAccount(@PathVariable("a") String x, @PathVariable("b") Integer y) {
+            createAccount(x, y);
+        }
+    */
     @PostMapping("/addbankaccount/{a}/{b}")
-    public void addAccount(@PathVariable("a") String x, @PathVariable("b") Integer y) {
-        createAccount(x, y);
+    public void addAccount(@RequestBody Account account, @PathVariable("a") String x) {
+        accounts.put(x, y)
+        accounts.(account);
     }
+////////////////SIIIIIIIN ÜLEVAL JÄI POOLELI////////////////////////////
 
+
+
+
+
+    /*
+    //22222222222222222222222222222222222222222222222222222222222222222222
     //Vaata kontoseisu
     @GetMapping("/allaccounts/{a}")
     public Integer AmountinAccount(@PathVariable("a") String x) {
         return getBalance(x);
     }
+*/
+
 
     //Lisa raha...
     @PutMapping("/depositIntoAccount/{a}/{b}")
