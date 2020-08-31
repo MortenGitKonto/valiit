@@ -1,9 +1,9 @@
 package ee.bcs.valiit.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*@RestController
 public class TestController {
@@ -21,6 +21,8 @@ public class TestController {
         return fibonacci(element);
     }*/
 
+
+    private final List<Employee> employees = new ArrayList();
 
     ///////FIBONACCI/////////11111111111111
     //Fibonacci meetod parameetriga n
@@ -109,6 +111,9 @@ public class TestController {
         return true;
     }
 
+
+/////////////TEE massiiv integeridest///////////////////
+
     ///////TAGURPIDI STRING/////////
     public static String reverseString(String a) {
         // TODO tagasta string tagurpidi
@@ -127,8 +132,7 @@ public class TestController {
         return tagurpidi;
     }
 
-
-/////////////TEE massiiv integeridest///////////////////
+    /////////////LIIDA massiivi elemendid///////////////////
 
     public static int[] makeArray(int a, int b, int c) {
 
@@ -136,7 +140,8 @@ public class TestController {
         return (m);
     }
 
-    /////////////LIIDA massiivi elemendid///////////////////
+
+/////    GET MAPPINGUD   ///////
 
     public static int sum(int[] x) {
         // Todo liida kokku kõik numbrid massivis x
@@ -148,9 +153,6 @@ public class TestController {
         return sum;
 
     }
-
-
-/////    GET MAPPINGUD   ///////
 
     public static int[] sort(int[] a) {
         // TODO sorteeri massiiv suuruse järgi
@@ -263,35 +265,89 @@ public class TestController {
 
         return Lesson3.factorial(x);
 
-        }
+    }
 
     @GetMapping("/morse")//REQUEST PARAM-IGA EELMISTELE
-    public String morse (@RequestParam("sõna") String x) {
+    public String morse(@RequestParam("sõna") String x) {
 
         return Lesson3Hard.morseCode(x);
 
     }
 
     @GetMapping("/paarisFibonacciLiidetud")
-    public int evenFibon (@RequestParam("kuni") int x) {
+    public int evenFibon(@RequestParam("kuni") int x) {
 
         return Lesson3Hard.evenFibonacci(x);
 
     }
 
-
-
-    @GetMapping("employeeGetterSetter")
-    public Employee employeeDtoTest () {
-        Employee employee = new Employee();
-        employee.setAge(25);
-        employee.setName("Vello");
-        employee.setAddress("kesklinn");
-
-        return employee;
-
+    public List<Employee> employeeDtoTest() {
+        return employees;
     }
-        }
+
+    /*@PostMapping("employees")
+    public void employeeDtoTest (@RequestBody Employee employee) {
+
+        /*employee.setAge(25);
+        employee.setName("Vello");
+        employee.setAddress("kesklinn");*/
+
+        /*System.out.println(employee.getAge());
+        System.out.println(employee.getAddress());
+        System.out.println(employee.getName());*/
+
+    /*{
+        "name": "Vello",
+        "age": 25,
+        "address": "Paide"
+    }*/
+
+
+    //return employee;
+
+//Vaata listi
+    @GetMapping("/allemployees")
+    public List<Employee> employees() {
+        return employeeDtoTest();
+    }
+//Loo elemente listi
+    @PostMapping("/addemployee")
+    public void addEmployee(@RequestBody Employee employee) {
+        employees.add(employee);
+    }
+
+    /*@PostMapping("/addemployeeindex/{a}")
+    public void addEmployee(@RequestBody Employee employee, @PathVariable("a") int x) {
+        employees.add(x, employee);
+        //System.out.println(employees);
+
+    }*/
+
+//Vaata listi indexil ...
+    @GetMapping("/employee/{a}")
+    public Employee employeeInfo(@PathVariable("a") int x) {
+        return employees.get(x);
+    }
+//Muuda listi indexil...
+    @PutMapping("/setemployee/{a}")
+    public void replaceInfo(@RequestBody Employee employee, @PathVariable("a") int x) {
+        employees.set(x, employee);
+    }
+//Võta listist ära element indexil...
+    @DeleteMapping("/deleteemployee/{a}")
+    public void deleteInfo(@PathVariable("a") int x) {
+        employees.remove(x);
+    }
+
+
+
+
+}
+
+
+
+
+
 
 
 
