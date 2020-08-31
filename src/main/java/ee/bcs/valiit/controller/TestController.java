@@ -281,6 +281,16 @@ public class TestController {
 
 
 
+    @GetMapping("employeeGetterSetter")
+    public Employee employeeDtoTest () {
+        Employee employee = new Employee();
+        employee.setAge(25);
+        employee.setName("Vello");
+        employee.setAddress("kesklinn");
+
+        return employee;
+
+    }
         }
 
 
