@@ -15,22 +15,16 @@ public class BankController {
     }
 
     public void depositMoney(String x, Integer y) {
-
         accounts.put(x, accounts.get(x) + y);
-
     }
 
     public void withdrawMoney(String x, Integer y) {
-
         accounts.put(x, accounts.get(x) - y);
-
     }
 
     public void transferMoney(String x, String y, Integer z) {
-
         accounts.put(x, accounts.get(x) + z);
         accounts.put(y, accounts.get(y) - z);
-
     }
 
     //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
