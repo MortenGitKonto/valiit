@@ -44,51 +44,63 @@ public class BankController {
     }
 
 
-    /*
-        //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-        //Loo accounte listi
-        @PostMapping("/addbankaccount/{a}/{b}")
-        public void addAccount(@PathVariable("a") String x, @PathVariable("b") Integer y) {
-            createAccount(x, y);
-        }
-    */
-    @PostMapping("/addbankaccount/{a}/{b}")
-    public void addAccount(@RequestBody Account account, @PathVariable("a") String x) {
-        accounts.put(x, y)
-        accounts.(account);
+    //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+    //Loo accounte listi
+    /*@PostMapping("/addbankaccount/{a}/{b}")
+    public void addAccount(@PathVariable("a") String x, @PathVariable("b") Integer y) {
+        createAccount(x, y);
+    }*/
+
+    @PostMapping("/addbankaccount")
+    public void addAccount(@RequestBody Account reqaccount) {
+        accounts.put(reqaccount.getAccountNumber(), reqaccount.getAmount());
     }
-////////////////SIIIIIIIN ÜLEVAL JÄI POOLELI////////////////////////////
 
 
-
-
-
-    /*
     //22222222222222222222222222222222222222222222222222222222222222222222
     //Vaata kontoseisu
     @GetMapping("/allaccounts/{a}")
     public Integer AmountinAccount(@PathVariable("a") String x) {
         return getBalance(x);
     }
-*/
 
 
-    //Lisa raha...
+//33333333333333333333333333333333333333333333333333333333333333333333333
+    /*//Lisa raha...
     @PutMapping("/depositIntoAccount/{a}/{b}")
     public void depositAmount(@PathVariable("a") String x, @PathVariable("b") Integer y) {
         depositMoney(x, y);
+    }*/
+
+    //Lisa raha...
+    @PutMapping("/depositIntoAccount")
+    public void depositAmount(@RequestBody Account reqaccount) {
+        depositMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
     }
 
+    //4444444444444444444444444444444444444444444444444444444444444444444444
     //Võta raha...
-    @PutMapping("/withdrawFromAccount/{a}/{b}")
+    /*@PutMapping("/withdrawFromAccount/{a}/{b}")
     public void withdrawAmount(@PathVariable("a") String x, @PathVariable("b") Integer y) {
         withdrawMoney(x, y);
+    }*/
+
+    @PutMapping("/withdrawFromAccount")
+    public void withdrawAmount(@RequestBody Account reqaccount) {
+        withdrawMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
     }
 
+    //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+
     //Transfeer
-    @PutMapping("/transferMoney/{a}/{b}/{c}")
-    public void withdrawAmount(@PathVariable("a") String x, @PathVariable("b") String y, @PathVariable("c") Integer z) {
+    /*@PutMapping("/transferMoney/{a}/{b}/{c}")
+    public void transferMoney(@PathVariable("a") String x, @PathVariable("b") String y, @PathVariable("c") Integer z) {
         transferMoney(x, y, z);
+    }*/
+
+    @PutMapping("/transferMoney")
+    public void transferMoney(@RequestBody TransferMoneyRequest transferRequest) {
+        transferMoney(transferRequest.getAccountNumber(), transferRequest.getAccountNumber2(), transferRequest.getAmount());
     }
 }
 

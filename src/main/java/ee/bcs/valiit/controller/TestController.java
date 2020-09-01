@@ -305,7 +305,7 @@ public class TestController {
 
     //return employee;
 
-//Vaata listi
+    //Vaata listi
 //Loo elemente listi
     @PostMapping("/addemployee")
     public void addEmployee(@RequestBody Employee employee) {
@@ -324,28 +324,27 @@ public class TestController {
     public void addEmployee(@RequestBody Employee employee, @PathVariable("a") int x) {
         employees.add(x, employee);
         //System.out.println(employees);
-
+    }
 
 //Vaata listi indexil ...
-    @GetMapping("/employee/{a}")
-    public Employee employeeInfo(@PathVariable("a") int x) {
-        return employees.get(x);
-    }
+        @GetMapping("/employee/{a}")
+        public Employee employeeInfo ( @PathVariable("a") int x){
+            return employees.get(x);
+        }
 //Muuda listi indexil...
-    @PutMapping("/setemployee/{a}")
-    public void replaceInfo(@RequestBody Employee employee, @PathVariable("a") int x) {
-        employees.set(x, employee);
-    }
+        @PutMapping("/setemployee/{a}")
+        public void replaceInfo (@RequestBody Employee employee,@PathVariable("a") int x){
+            employees.set(x, employee);
+        }
 //Võta listist ära element indexil...
-    @DeleteMapping("/deleteemployee/{a}")
-    public void deleteInfo(@PathVariable("a") int x) {
-        employees.remove(x);
+        @DeleteMapping("/deleteemployee/{a}")
+        public void deleteInfo ( @PathVariable("a") int x){
+            employees.remove(x);
+        }
+
+
     }
 
-
-
-
-}
 
 
 
