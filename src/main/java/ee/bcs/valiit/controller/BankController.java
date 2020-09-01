@@ -10,39 +10,28 @@ public class BankController {
 
     private final Map<String, Integer> accounts = new HashMap();
 
-    /*public static int bankAccountTest() {
-        return bank;
-    }*/
-
-    public Map<String, Integer> createAccount(String x, Integer y) {
-        accounts.put(x, y);
-        return accounts;
-    }
-
     public Integer getBalance(String x) {
         return accounts.get(x);
     }
 
-    public Map<String, Integer> depositMoney(String x, Integer y) {
+    public void depositMoney(String x, Integer y) {
 
         accounts.put(x, accounts.get(x) + y);
-        return accounts;
+
     }
 
-    public Map<String, Integer> withdrawMoney(String x, Integer y) {
+    public void withdrawMoney(String x, Integer y) {
 
         accounts.put(x, accounts.get(x) - y);
-        return accounts;
+
     }
 
-    public Map<String, Integer> transferMoney(String x, String y, Integer z) {
+    public void transferMoney(String x, String y, Integer z) {
 
         accounts.put(x, accounts.get(x) + z);
         accounts.put(y, accounts.get(y) - z);
 
-        return accounts;
     }
-
 
     //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     //Loo accounte listi
@@ -103,6 +92,3 @@ public class BankController {
         transferMoney(transferRequest.getAccountNumber(), transferRequest.getAccountNumber2(), transferRequest.getAmount());
     }
 }
-
-
-
