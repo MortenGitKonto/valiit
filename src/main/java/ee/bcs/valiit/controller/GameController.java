@@ -14,18 +14,6 @@ public class GameController {
 
     private final Map<Integer, Integer> game = new HashMap();
 
-    public static int randomGame() {
-        // TODO kirjuta mäng mis võtab suvalise numbri 0-100, mille kasutaja peab ära arvama
-        // iga kord pärast kasutaja sisestatud täis arvu peab programm ütlema kas number oli suurem või väiksem
-        // ja kasutaja peab saama uuesti arvata
-        // numbri ära arvamise korral peab programm välja trükkima mitu katset läks numbri ära arvamiseks
-
-        Random random = new Random();
-        int arvRandom = random.nextInt(100);
-        //System.out.println(arv);
-        return arvRandom;
-    }
-
     //////////////////////////////////////////////////////////////////////////////
     @PostMapping("/generateNR")
     public void generateNumber() {
