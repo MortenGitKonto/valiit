@@ -140,18 +140,41 @@ public class BankController {
         depositMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
     }*/
 
+
+
+
+
+
+
+
+
+
+    /////SIIIIIIIIIIIIIIIIIIIIIA JÄIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN
+    //Geti olemasolev balanss ja siis salvesta ära (mappi) ja siis liida sellele juurde midagi ReqBodys
+    //ja uuenda ehk hübriid @getmappingust ja @putmappingust.
     @PutMapping("/sqlDepositIntoAccount")
     public void sqlDepositAmount(@RequestBody Account reqaccount) {
 
-        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
+       /* String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("clientId", reqaccount.getClientId());
         paramMap.put("accountNr", reqaccount.getAccountNumber());
         paramMap.put("balance", reqaccount.getAmount());
         paramMap.put("id", reqaccount.getId());
-        template.update(sql, paramMap);
+        template.update(sql, paramMap);*/
 
-        depositMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
+        //depositMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
+
+        /*public String testSql() {
+            String sql = "select balance from bank_accounts where id = :id";
+            Map<String, Object> paramMap = new HashMap();
+            paramMap.put("id", 2);
+            String vastus = template.queryForObject(sql, paramMap, String.class);
+            return vastus;
+        }*/
+
+
+
     }
 
     @PutMapping("sqlUpdateAccountInfo")
