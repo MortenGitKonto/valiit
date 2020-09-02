@@ -14,7 +14,7 @@ public class BankController {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
-    @GetMapping("sqltest")
+    @GetMapping("sqltestBalance")
     public String testSql() {
         String sql = "select balance from bank_accounts where id = :id";
         Map<String, Object> paramMap = new HashMap();
@@ -23,34 +23,70 @@ public class BankController {
         return vastus;
     }
 
-    @PutMapping("sqlUpdateAccountNr")
+    /*@PutMapping("sqlUpdateAccountInfo")
     public void updateSqlAccountNr() {
-        String sql = "update bank_accounts set account_nr = :account_nr where id = :id";
+        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
         Map<String, Object> paramMap = new HashMap();
+        paramMap.put("clientId", 222);
+        paramMap.put("accountNr", "ACCOUNT2");
+        paramMap.put("balance", 220000);
+        paramMap.put("id", 2);
+        template.update(sql, paramMap);
+    }*/
+
+    @PutMapping("sqlUpdateAccountInfo")
+    public void updateSqlAccountNr(@RequestBody Account account) {
+        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("clientId", account.getClientId());
+        paramMap.put("accountNr", account.getAccountNumber());
+        paramMap.put("balance", account.getAmount());
+        paramMap.put("id", account.getId());
+        template.update(sql, paramMap);
+    }
+
+
+    /*@PostMapping("sqlNewRow")
+    public void newRow() {
+        String sql = "INSERT INTO bank_accounts (id, client_id, account_nr, balance) VALUES (:id, :clientId, :accountNr, :balance)";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", 2);
+        paramMap.put("clientId", 202);
+        paramMap.put("accountNr", "ACCOUNT2");
+        paramMap.put("balance", 20000);
+        template.update(sql, paramMap);
+    }*/
+
+    @PostMapping("sqlNewAccount")
+    public void newAccount(@RequestBody Account account) {
+        String sql = "INSERT INTO bank_accounts (id, client_id, account_nr, balance) VALUES (:id, :clientId, :accountNr, :balance)";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", account.getId());
+        paramMap.put("clientId", account.getClientId());
+        paramMap.put("accountNr", account.getAccountNumber());
+        paramMap.put("balance", account.getAmount());
+        template.update(sql, paramMap);
+    }
+
+    //accounts.put(reqaccount.getAccountNumber(), reqaccount.getAmount());
+
+        /*String sql = "update bank_accounts set column1 = :column1, column2=:column2;
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("account_nr", "ACCOUNT1");
+        paramMap.put("account_nr", "ACC3");
         paramMap.put("account_nr", "ACC3");
         paramMap.put("id", 1);
         template.update(sql, paramMap);
-           }
+           }*/
 
-    @PutMapping("sqlUpdateBalance")
+    /*@PutMapping("sqlUpdateBalance")
     public void updateSqlBalance() {
         String sql = "update bank_accounts set balance = :balance where id = :id";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("balance", 4949);
         paramMap.put("id", 1);
         template.update(sql, paramMap);
-    }
-
-
-    /*@PostMapping("sqlUpdate")
-    public void addToSql() {
-        String sql = "update bank_accounts set account_nr = :account_nr where id = :id";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("account_nr", "ACC3");
-        paramMap.put("id", 1);
-        template.update(sql, paramMap);
     }*/
-
 
 
     public Integer getBalance(String x) {
@@ -98,10 +134,35 @@ public class BankController {
         depositMoney(x, y);
     }*/
 
-    //Lisa raha...
+    /*//Lisa raha...
     @PutMapping("/depositIntoAccount")
     public void depositAmount(@RequestBody Account reqaccount) {
         depositMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
+    }*/
+
+    @PutMapping("/sqlDepositIntoAccount")
+    public void sqlDepositAmount(@RequestBody Account reqaccount) {
+
+        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("clientId", reqaccount.getClientId());
+        paramMap.put("accountNr", reqaccount.getAccountNumber());
+        paramMap.put("balance", reqaccount.getAmount());
+        paramMap.put("id", reqaccount.getId());
+        template.update(sql, paramMap);
+
+        depositMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
+    }
+
+    @PutMapping("sqlUpdateAccountInfo")
+    public void updateSqlAccountNr(@RequestBody Account account) {
+        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("clientId", account.getClientId());
+        paramMap.put("accountNr", account.getAccountNumber());
+        paramMap.put("balance", account.getAmount());
+        paramMap.put("id", account.getId());
+        template.update(sql, paramMap);
     }
 
     //4444444444444444444444444444444444444444444444444444444444444444444444
