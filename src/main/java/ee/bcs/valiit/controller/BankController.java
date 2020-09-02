@@ -1,5 +1,7 @@
 package ee.bcs.valiit.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -9,6 +11,47 @@ import java.util.Map;
 public class BankController {
 
     private final Map<String, Integer> accounts = new HashMap();
+    @Autowired
+    private NamedParameterJdbcTemplate template;
+
+    @GetMapping("sqltest")
+    public String testSql() {
+        String sql = "select balance from bank_accounts where id = :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", 2);
+        String vastus = template.queryForObject(sql, paramMap, String.class);
+        return vastus;
+    }
+
+    @PutMapping("sqlUpdateAccountNr")
+    public void updateSqlAccountNr() {
+        String sql = "update bank_accounts set account_nr = :account_nr where id = :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("account_nr", "ACC3");
+        paramMap.put("id", 1);
+        template.update(sql, paramMap);
+           }
+
+    @PutMapping("sqlUpdateBalance")
+    public void updateSqlBalance() {
+        String sql = "update bank_accounts set balance = :balance where id = :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("balance", 4949);
+        paramMap.put("id", 1);
+        template.update(sql, paramMap);
+    }
+
+
+    /*@PostMapping("sqlUpdate")
+    public void addToSql() {
+        String sql = "update bank_accounts set account_nr = :account_nr where id = :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("account_nr", "ACC3");
+        paramMap.put("id", 1);
+        template.update(sql, paramMap);
+    }*/
+
+
 
     public Integer getBalance(String x) {
         return accounts.get(x);
@@ -84,5 +127,9 @@ public class BankController {
     @PutMapping("/transferMoney")
     public void transferMoney(@RequestBody TransferMoneyRequest transferRequest) {
         transferMoney(transferRequest.getAccountNumber(), transferRequest.getAccountNumber2(), transferRequest.getAmount());
+
+
     }
+
 }
+
