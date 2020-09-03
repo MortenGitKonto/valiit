@@ -1,27 +1,25 @@
 package ee.bcs.valiit.controller;
 
-import java.math.BigInteger;
-
 public class Account {
 
     private String accountNumber;
     private int amount;
-    private BigInteger id;
-    private BigInteger clientId;
+    private int id;
+    private int clientId;
 
-    public BigInteger getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public BigInteger getClientId() {
+    public int getClientId() {
         return clientId;
     }
 
-    public void setClientId(BigInteger clientId) {
+    public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 

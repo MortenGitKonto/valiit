@@ -5,23 +5,28 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class BankController {
 
     private final Map<String, Integer> accounts = new HashMap();
+
     @Autowired
     private NamedParameterJdbcTemplate template;
-
-    @GetMapping("sqltestBalance")
+    //////////////////////////////////////////////////////////////////////////////
+    @Autowired
+    private BankService bankService;
+    ////////////////////////////////////////////////////////////////////////////////////
+    /*@GetMapping("sqltestBalance")
     public String testSql() {
         String sql = "select balance from bank_accounts where id = :id";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("id", 2);
         String vastus = template.queryForObject(sql, paramMap, String.class);
         return vastus;
-    }
+    }*/
 
     /*@PutMapping("sqlUpdateAccountInfo")
     public void updateSqlAccountNr() {
@@ -34,15 +39,18 @@ public class BankController {
         template.update(sql, paramMap);
     }*/
 
+    //KUTSU KÕIK PANGAKONTOD VÄLJA
+
+    @GetMapping("sqltestAllAccounts")
+    public List<Account> testAllAccounts() {
+        List<Account> kontodeList = bankService.testAllAccountsBankService();
+        return kontodeList;
+    }
+
+
     @PutMapping("sqlUpdateAccountInfo")
     public void updateSqlAccountNr(@RequestBody Account account) {
-        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("clientId", account.getClientId());
-        paramMap.put("accountNr", account.getAccountNumber());
-        paramMap.put("balance", account.getAmount());
-        paramMap.put("id", account.getId());
-        template.update(sql, paramMap);
+        bankService.updateSqlAccountNrBankService(account);
     }
 
 
@@ -68,7 +76,7 @@ public class BankController {
         template.update(sql, paramMap);
     }
 
-    //accounts.put(reqaccount.getAccountNumber(), reqaccount.getAmount());
+
 
         /*String sql = "update bank_accounts set column1 = :column1, column2=:column2;
         Map<String, Object> paramMap = new HashMap();
@@ -113,18 +121,18 @@ public class BankController {
         createAccount(x, y);
     }*/
 
-    @PostMapping("/addbankaccount")
+    /*@PostMapping("/addbankaccount")
     public void addAccount(@RequestBody Account reqaccount) {
         accounts.put(reqaccount.getAccountNumber(), reqaccount.getAmount());
-    }
+    }*/
 
 
     //22222222222222222222222222222222222222222222222222222222222222222222
     //Vaata kontoseisu
-    @GetMapping("/allaccounts/{a}")
+    /*@GetMapping("/allaccounts/{a}")
     public Integer AmountinAccount(@PathVariable("a") String x) {
         return getBalance(x);
-    }
+    }*/
 
 
 //33333333333333333333333333333333333333333333333333333333333333333333333
@@ -141,52 +149,66 @@ public class BankController {
     }*/
 
 
-
-
-
-
-
-
-
-
-    /////SIIIIIIIIIIIIIIIIIIIIIA JÄIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN
-    //Geti olemasolev balanss ja siis salvesta ära (mappi) ja siis liida sellele juurde midagi ReqBodys
-    //ja uuenda ehk hübriid @getmappingust ja @putmappingust.
+    /////DEPOSIT
     @PutMapping("/sqlDepositIntoAccount")
     public void sqlDepositAmount(@RequestBody Account reqaccount) {
 
-       /* String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
+        String sqlGet = "select balance from bank_accounts where id = :id";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("clientId", reqaccount.getClientId());
-        paramMap.put("accountNr", reqaccount.getAccountNumber());
-        paramMap.put("balance", reqaccount.getAmount());
         paramMap.put("id", reqaccount.getId());
-        template.update(sql, paramMap);*/
+        Integer balanceNow = template.queryForObject(sqlGet, paramMap, Integer.class);
+        String sqlDeposit = "update bank_accounts set balance= :balance where id= :id";
 
-        //depositMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
-
-        /*public String testSql() {
-            String sql = "select balance from bank_accounts where id = :id";
-            Map<String, Object> paramMap = new HashMap();
-            paramMap.put("id", 2);
-            String vastus = template.queryForObject(sql, paramMap, String.class);
-            return vastus;
-        }*/
-
-
-
+        paramMap.put("balance", (balanceNow + reqaccount.getAmount()));
+        template.update(sqlDeposit, paramMap);
     }
 
-    @PutMapping("sqlUpdateAccountInfo")
-    public void updateSqlAccountNr(@RequestBody Account account) {
-        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNr, balance= :balance where id= :id";
+///WITHDRAW
+
+    @PutMapping("/sqlWithdrawFromAccount")
+    public void sqlWithdrawAmount(@RequestBody Account reqaccount) {
+
+        String sqlGet = "select balance from bank_accounts where id = :id";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("clientId", account.getClientId());
-        paramMap.put("accountNr", account.getAccountNumber());
-        paramMap.put("balance", account.getAmount());
-        paramMap.put("id", account.getId());
-        template.update(sql, paramMap);
+        paramMap.put("id", reqaccount.getId());
+        Integer balanceNow = template.queryForObject(sqlGet, paramMap, Integer.class);
+        String sqlWithdraw = "update bank_accounts set balance= :balance where id= :id";
+        paramMap.put("balance", (balanceNow - reqaccount.getAmount()));
+        template.update(sqlWithdraw, paramMap);
     }
+
+    ///TRANSFER
+
+    @PutMapping("/sqlTransferFromAccountToAccount")
+    public void sqlTransfer(@RequestBody List<Account> transfer) {
+
+        sqlWithdrawAmount(transfer.get(0));
+        sqlDepositAmount(transfer.get(1));
+    }
+
+///TRANSFER PIKALT LAHTIKIRJUTATUD - TÖÖTAB KA
+    /*@PutMapping("/sqlTransferFromAccountToAccount")
+    public void sqlTransfer(@RequestBody TransferMoneyRequest transfer) {
+
+        String sqlGet = "select balance from bank_accounts where account_nr= :accountNr";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("accountNr", transfer.getAccountNumber());
+        //Balance 1
+        Integer balanceAcc1 = template.queryForObject(sqlGet, paramMap, Integer.class);
+
+        String sqlGet2 = "select balance from bank_accounts where account_nr= :accountNr2";
+        paramMap.put("accountNr2", transfer.getAccountNumber2());
+        //Balance 2
+        Integer balanceAcc2 = template.queryForObject(sqlGet2, paramMap, Integer.class);
+
+        String sqlFromAcc = "update bank_accounts set balance= :balance where account_nr= :accountNr";
+        paramMap.put("balance", (balanceAcc1 - transfer.getAmount()));
+        template.update(sqlFromAcc, paramMap);
+
+        String sqlToAcc = "update bank_accounts set balance= :balance2 where account_nr= :accountNr2";
+        paramMap.put("balance2", (balanceAcc2 + transfer.getAmount()));
+        template.update(sqlToAcc, paramMap);
+    }*/
 
     //4444444444444444444444444444444444444444444444444444444444444444444444
     //Võta raha...
@@ -195,10 +217,10 @@ public class BankController {
         withdrawMoney(x, y);
     }*/
 
-    @PutMapping("/withdrawFromAccount")
+    /*@PutMapping("/withdrawFromAccount")
     public void withdrawAmount(@RequestBody Account reqaccount) {
         withdrawMoney(reqaccount.getAccountNumber(), reqaccount.getAmount());
-    }
+    }*/
 
     //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
 
@@ -208,12 +230,10 @@ public class BankController {
         transferMoney(x, y, z);
     }*/
 
-    @PutMapping("/transferMoney")
+    /*@PutMapping("/transferMoney")
     public void transferMoney(@RequestBody TransferMoneyRequest transferRequest) {
         transferMoney(transferRequest.getAccountNumber(), transferRequest.getAccountNumber2(), transferRequest.getAmount());
-
-
-    }
+    }*/
 
 }
 
