@@ -3,6 +3,8 @@ package ee.bcs.valiit.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +67,17 @@ public class BankRepository {
         paramMap.put("balance", (balanceNow + account.getAmount()));
         template.update(sqlDeposit, paramMap);
     }
+
+
+    public void sqlWithdrawAmountRepository (Account account, Integer balanceNow) {
+
+        String sqlWithdraw = "update bank_accounts set balance= :balance where id= :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", account.getId());
+        paramMap.put("balance", (balanceNow - account.getAmount()));
+        template.update(sqlWithdraw, paramMap);
+    }
+
 
 
 }

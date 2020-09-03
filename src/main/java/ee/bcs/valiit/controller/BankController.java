@@ -153,19 +153,11 @@ public class BankController {
 
     }
 
-///WITHDRAW
+    /////WITHDRAW
 
     @PutMapping("/sqlWithdrawFromAccount")
-    public void sqlWithdrawAmount(@RequestBody Account reqaccount) {
-
-        String sqlGet = "select balance from bank_accounts where id = :id";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", reqaccount.getId());
-        Integer balanceNow = template.queryForObject(sqlGet, paramMap, Integer.class);
-
-        String sqlWithdraw = "update bank_accounts set balance= :balance where id= :id";
-        paramMap.put("balance", (balanceNow - reqaccount.getAmount()));
-        template.update(sqlWithdraw, paramMap);
+    public void sqlWithdrawAmount(@RequestBody Account account) {
+        bankService.sqlWithdrawAmountService(account);
     }
 
     ///TRANSFER

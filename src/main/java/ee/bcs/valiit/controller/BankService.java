@@ -31,10 +31,8 @@ public class BankService {
     }
 
 
-
-
     //TEE UUS ACCOUNT
-    public void newAccountService (Account account) {
+    public void newAccountService(Account account) {
 
         bankRepository.newAccountRepository(account);
 
@@ -44,11 +42,15 @@ public class BankService {
     @PutMapping("/sqlDepositIntoAccount")
     public void sqlDepositAmountService(Account account) {
 
-        Integer currentBalance = bankRepository.selectBalanceRepository (account);
-        bankRepository.sqlDepositAmountRepository(account, currentBalance );
+        Integer currentBalance = bankRepository.selectBalanceRepository(account);
+        bankRepository.sqlDepositAmountRepository(account, currentBalance);
 
     }
 
 
-
+    /////WITHDRAW
+    public void sqlWithdrawAmountService(Account account) {
+        Integer currentBalance = bankRepository.selectBalanceRepository(account);
+        bankRepository.sqlWithdrawAmountRepository(account, currentBalance);
+    }
 }
