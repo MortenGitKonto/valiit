@@ -47,12 +47,11 @@ public class BankController {
         return kontodeList;
     }
 
-
+    //MUUDA ÜHE KONTO KÕIKI ANDMEID
     @PutMapping("sqlUpdateAccountInfo")
     public void updateSqlAccountNr(@RequestBody Account account) {
         bankService.updateSqlAccountNrBankService(account);
     }
-
 
     /*@PostMapping("sqlNewRow")
     public void newRow() {
@@ -65,15 +64,12 @@ public class BankController {
         template.update(sql, paramMap);
     }*/
 
+    //TEE UUS ACCOUNT
     @PostMapping("sqlNewAccount")
     public void newAccount(@RequestBody Account account) {
-        String sql = "INSERT INTO bank_accounts (id, client_id, account_nr, balance) VALUES (:id, :clientId, :accountNr, :balance)";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", account.getId());
-        paramMap.put("clientId", account.getClientId());
-        paramMap.put("accountNr", account.getAccountNumber());
-        paramMap.put("balance", account.getAmount());
-        template.update(sql, paramMap);
+
+        bankService.newAccountService(account);
+
     }
 
 
@@ -151,16 +147,10 @@ public class BankController {
 
     /////DEPOSIT
     @PutMapping("/sqlDepositIntoAccount")
-    public void sqlDepositAmount(@RequestBody Account reqaccount) {
+    public void sqlDepositAmount(@RequestBody Account account) {
 
-        String sqlGet = "select balance from bank_accounts where id = :id";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", reqaccount.getId());
-        Integer balanceNow = template.queryForObject(sqlGet, paramMap, Integer.class);
-        String sqlDeposit = "update bank_accounts set balance= :balance where id= :id";
+        bankService.sqlDepositAmountService(account);
 
-        paramMap.put("balance", (balanceNow + reqaccount.getAmount()));
-        template.update(sqlDeposit, paramMap);
     }
 
 ///WITHDRAW
@@ -172,6 +162,7 @@ public class BankController {
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("id", reqaccount.getId());
         Integer balanceNow = template.queryForObject(sqlGet, paramMap, Integer.class);
+
         String sqlWithdraw = "update bank_accounts set balance= :balance where id= :id";
         paramMap.put("balance", (balanceNow - reqaccount.getAmount()));
         template.update(sqlWithdraw, paramMap);
