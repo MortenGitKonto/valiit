@@ -23,8 +23,23 @@
                 <constraints nullable="false" foreignKeyName="fk_bankAccounts_clients" references="clients(id)"/>
             </column>
             <column name="account_nr" type="text">
+                <constraints unique="true"/>
             </column>
             <column name="balance" type="int">
+            </column>
+        </createTable>
+        <createTable tableName="transaction_history">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="transaction_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_transactionHistory_bankAccount" references="bank_accounts(id)"/>
+            </column>
+            <column name="transfer" type="int">
+            </column>
+            <column name="withdrawal" type="int">
+            </column>
+            <column name="deposit" type="int">
             </column>
         </createTable>
     </changeSet>
