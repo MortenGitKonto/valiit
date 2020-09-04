@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+
+
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="1" author="Morten">
+        <createTable tableName="clients">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user" type="char(2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="bank_accounts">
+            <column name="id" type="int" autoIncrement="true">
+            </column>
+            <column name="client_id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account_nr" type="char(2)">
+            </column>
+            <column name="balance" type="int">
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

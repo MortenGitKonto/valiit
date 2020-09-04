@@ -165,8 +165,8 @@ public class BankController {
     @PutMapping("/sqlTransferFromAccountToAccount")
     public void sqlTransfer(@RequestBody List<Account> transfer) {
 
-        sqlWithdrawAmount(transfer.get(0));
-        sqlDepositAmount(transfer.get(1));
+        bankService.sqlTransferAmountService(transfer);
+
     }
 
 ///TRANSFER PIKALT LAHTIKIRJUTATUD - TÖÖTAB KA

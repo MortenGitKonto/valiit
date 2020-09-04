@@ -78,6 +78,4 @@ public class BankRepository {
         template.update(sqlWithdraw, paramMap);
     }
 
-
-
 }
