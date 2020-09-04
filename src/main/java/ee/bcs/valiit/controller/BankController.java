@@ -39,7 +39,7 @@ public class BankController {
         template.update(sql, paramMap);
     }*/
 
-    //KUTSU KÕIK PANGAKONTOD VÄLJA
+    //KUTSU KÕIK PANGAKONTOD VÄLJA (tabelist bank_accounts)
 
     @GetMapping("sqltestAllAccounts")
     public List<Account> testAllAccounts() {
@@ -47,10 +47,24 @@ public class BankController {
         return kontodeList;
     }
 
+    //KUTSU KÕIK KLIENDID VÄLJA (tabelist clients)
+
+    @GetMapping("sqltestAllClients")
+    public List<Client> testAllClients() {
+        List<Client> clientList = bankService.testAllClientsBankService();
+        return clientList;
+    }
+
     //MUUDA ÜHE KONTO KÕIKI ANDMEID
     @PutMapping("sqlUpdateAccountInfo")
     public void updateSqlAccountNr(@RequestBody Account account) {
         bankService.updateSqlAccountNrBankService(account);
+    }
+
+    //MUUDA ÜHE KLIENDI KÕIKI ANDMEID
+    @PutMapping("sqlUpdateClientInfo")
+    public void updateSqlClientNr(@RequestBody Client client) {
+        bankService.updateSqlClientNrBankService(client);
     }
 
     /*@PostMapping("sqlNewRow")
@@ -64,14 +78,20 @@ public class BankController {
         template.update(sql, paramMap);
     }*/
 
-    //TEE UUS ACCOUNT
+    //TEE UUS ACCOUNT (tabelisse bank_accounts)
     @PostMapping("sqlNewAccount")
     public void newAccount(@RequestBody Account account) {
 
         bankService.newAccountService(account);
 
     }
+    //TEE UUS KLIENT (tabelisse clients)
+    @PostMapping("sqlNewClient")
+    public void newClient(@RequestBody Client client) {
 
+        bankService.newClientService(client);
+
+    }
 
 
         /*String sql = "update bank_accounts set column1 = :column1, column2=:column2;

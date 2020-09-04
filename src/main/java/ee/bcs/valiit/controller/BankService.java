@@ -19,6 +19,14 @@ public class BankService {
         return list;
     }
 
+    //KUTSU KÕIK KLIENDID VÄLJA (tabelist clients)
+    public List<Client> testAllClientsBankService() {
+
+        List<Client> clientList = bankRepository.testAllClientsBankRepository();
+
+        return clientList;
+    }
+
 
     //MUUDA ÜHE KONTO KÕIKI ANDMEID
     public void updateSqlAccountNrBankService(Account account) {
@@ -66,5 +74,16 @@ public class BankService {
         if (currentBalanceAcc1 >= transfer.get(0).getAmount()) {
             sqlDepositAmountService(transfer.get(1));
         }
+    }
+
+    public void newClientService(Client client) {
+
+        bankRepository.newClientRepository(client);
+
+    }
+
+    public void updateSqlClientNrBankService(Client client) {
+
+        bankRepository.updateSqlClientNrBankRepository(client);
     }
 }

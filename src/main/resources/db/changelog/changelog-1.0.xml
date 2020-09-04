@@ -11,17 +11,18 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user" type="char(2)">
+            <column name="name" type="text">
                 <constraints nullable="false"/>
             </column>
         </createTable>
         <createTable tableName="bank_accounts">
             <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
             </column>
             <column name="client_id" type="int">
-                <constraints primaryKey="true" nullable="false"/>
+                <constraints nullable="false" foreignKeyName="fk_bankAccounts_clients" references="clients(id)"/>
             </column>
-            <column name="account_nr" type="char(2)">
+            <column name="account_nr" type="text">
             </column>
             <column name="balance" type="int">
             </column>

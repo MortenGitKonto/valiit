@@ -3,8 +3,6 @@ package ee.bcs.valiit.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +14,28 @@ public class BankRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
+    //TEE UUS KLIENT tabelisse clients
+    public void newClientRepository(Client client) {
+        String sql = "INSERT INTO clients (name) VALUES (:name)";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("name", client.getName());
+        template.update(sql, paramMap);
+    }
+
+    //TEE UUS ACCOUNT
+    public void newAccountRepository(Account account) {
+        String sql = "INSERT INTO bank_accounts (client_id, account_nr, balance) VALUES (:clientId, :accountNumber, :balance)";
+        Map<String, Object> paramMap = new HashMap();
+        //paramMap.put("id", account.getId());
+        paramMap.put("clientId", account.getClientId());
+        paramMap.put("accountNumber", account.getAccountNumber());
+        paramMap.put("balance", account.getAmount());
+        template.update(sql, paramMap);
+    }
+
+
+
+
     //KUTSU KÕIK PANGAKONTOD VÄLJA
     public List<Account> testAllAccountsBankRepository() {
 
@@ -23,6 +43,15 @@ public class BankRepository {
         Map<String, Object> paramMap = new HashMap();
         List<Account> resultList = template.query(sql, paramMap, new ObjectRowMapper());
         return resultList;
+    }
+
+    //KUTSU KÕIK KLIENDID VÄLJA
+    public List<Client> testAllClientsBankRepository() {
+
+        String sql = "select * from clients order by id";
+        Map<String, Object> paramMap = new HashMap();
+        List<Client> clientList = template.query(sql, paramMap, new ObjectRowMapper2());
+        return clientList;
     }
 
     //MUUDA ÜHE KONTO KÕIKI ANDMEID
@@ -38,16 +67,6 @@ public class BankRepository {
     }
 
 
-    //TEE UUS ACCOUNT
-    public void newAccountRepository(Account account) {
-        String sql = "INSERT INTO bank_accounts (id, client_id, account_nr, balance) VALUES (:id, :clientId, :accountNumber, :balance)";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", account.getId());
-        paramMap.put("clientId", account.getClientId());
-        paramMap.put("accountNumber", account.getAccountNumber());
-        paramMap.put("balance", account.getAmount());
-        template.update(sql, paramMap);
-    }
 
     /////DEPOSIT JA WITHDRAW (MÕLEMAD VAJAVAD KAHT ETAPPI)
 
@@ -60,7 +79,7 @@ public class BankRepository {
         return balanceNow;
     }
 
-    public void sqlDepositAmountRepository (Account account, Integer balanceNow) {
+    public void sqlDepositAmountRepository(Account account, Integer balanceNow) {
         String sqlDeposit = "update bank_accounts set balance= :balance where id= :id";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("id", account.getId());
@@ -69,7 +88,7 @@ public class BankRepository {
     }
 
 
-    public void sqlWithdrawAmountRepository (Account account, Integer balanceNow) {
+    public void sqlWithdrawAmountRepository(Account account, Integer balanceNow) {
 
         String sqlWithdraw = "update bank_accounts set balance= :balance where id= :id";
         Map<String, Object> paramMap = new HashMap();
@@ -78,4 +97,13 @@ public class BankRepository {
         template.update(sqlWithdraw, paramMap);
     }
 
+
+    public void updateSqlClientNrBankRepository(Client client) {
+
+        String sql = "update clients set name = :name where id= :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", client.getId());
+        paramMap.put("name", client.getName());
+        template.update(sql, paramMap);
+    }
 }
