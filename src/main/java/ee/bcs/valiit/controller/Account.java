@@ -6,7 +6,7 @@ public class Account {
     private int amount;
     private int id;
     private int clientId;
-    //private int transactionId;
+    private int accountId;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -40,11 +40,11 @@ public class Account {
         this.clientId = clientId;
     }
 
-    /*public int getTransactionId() {
-        return transactionId;
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
-    }*/
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
 }

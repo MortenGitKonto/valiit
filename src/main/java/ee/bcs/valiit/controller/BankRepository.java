@@ -35,10 +35,10 @@ public class BankRepository {
 
     //UUS DEPOSIT TRANSACTION HISTORY SISSEKANNE
     public void newDepositTransactionRepository(int depositAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
-        String sql = "INSERT INTO transaction_history (account_id, transfer, withdrawal, deposit) VALUES (:accountId, :transfer, :withdrawal, :deposit)";
+        String sql = "INSERT INTO transaction_history (toAccount_id, transfer, withdrawal, deposit) VALUES (:toAccountId, :transfer, :withdrawal, :deposit)";
         Map<String, Object> paramMap = new HashMap();
         //paramMap.put("id", account.getId());
-        paramMap.put("accountId", depositAccountId);
+        paramMap.put("toAccountId", depositAccountId);
         paramMap.put("deposit", depositAmount);
         paramMap.put("transfer", transferAmount);
         paramMap.put("withdrawal", withdrawalAmount);
@@ -48,10 +48,10 @@ public class BankRepository {
 
     //UUS WITHDRAW TRANSACTION HISTORY SISSEKANNE
     public void newWithdrawTransactionRepository(int withdrawAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
-        String sql = "INSERT INTO transaction_history (account_id, transfer, withdrawal, deposit) VALUES (:accountId, :transfer, :withdrawal, :deposit)";
+        String sql = "INSERT INTO transaction_history (fromAccount_id, transfer, withdrawal, deposit) VALUES (:fromAccountId, :transfer, :withdrawal, :deposit)";
         Map<String, Object> paramMap = new HashMap();
         //paramMap.put("id", account.getId());
-        paramMap.put("accountId", withdrawAccountId);
+        paramMap.put("fromAccountId", withdrawAccountId);
         paramMap.put("deposit", depositAmount);
         paramMap.put("transfer", transferAmount);
         paramMap.put("withdrawal", withdrawalAmount);
@@ -143,16 +143,27 @@ public class BankRepository {
     }
 
 
-
-    public Integer getAccountId (String specificAccountNumber) {
+////account ID kui võetakse raha
+    public Integer getFromAccountId (String specificAccountNumber) {
         String sql = "SELECT id FROM bank_accounts where account_nr = :accountNumber";
 
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("accountNumber", specificAccountNumber);
 
-        Integer specificAccountId = template.queryForObject(sql, paramMap, Integer.class);
+        Integer fromAccountId = template.queryForObject(sql, paramMap, Integer.class);
 
-        return specificAccountId;
+        return fromAccountId;
+    }
+////account ID kui pannakse juurde raha
+    public Integer getToAccountId (String specificAccountNumber) {
+        String sql = "SELECT id FROM bank_accounts where account_nr = :accountNumber";
+
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("accountNumber", specificAccountNumber);
+
+        Integer toAccountId = template.queryForObject(sql, paramMap, Integer.class);
+
+        return toAccountId;
     }
 
     /*public Integer getWithrawId(String withrawAccountNumber) {

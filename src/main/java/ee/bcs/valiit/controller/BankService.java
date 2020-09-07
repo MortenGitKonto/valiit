@@ -60,7 +60,7 @@ public class BankService {
         Integer currentBalance = bankRepository.selectBalanceRepository(account);
         bankRepository.sqlDepositAmountRepository(account, currentBalance);
 
-        int depositAccountId = bankRepository.getAccountId(account.getAccountNumber());
+        int depositAccountId = bankRepository.getToAccountId(account.getAccountNumber());
         bankRepository.newDepositTransactionRepository(depositAccountId, account.getAmount(),0,0);
     }
 
@@ -75,7 +75,7 @@ public class BankService {
             System.out.println("Not enough money in the account to make the transaction");
         }
 
-        int withdrawAccountId = bankRepository.getAccountId(account.getAccountNumber());
+        int withdrawAccountId = bankRepository.getFromAccountId(account.getAccountNumber());
         bankRepository.newWithdrawTransactionRepository(withdrawAccountId, 0,account.getAmount(),0);
     }
 
@@ -94,9 +94,9 @@ public class BankService {
             sqlDepositAmountService(transfer.get(1));
 
             //TRANSACTION HISTORY
-            int withdrawAccountId = bankRepository.getAccountId(transfer.get(0).getAccountNumber());
+            int withdrawAccountId = bankRepository.getFromAccountId(transfer.get(0).getAccountNumber());
 
-            int depositAccountId = bankRepository.getAccountId(transfer.get(1).getAccountNumber());
+            int depositAccountId = bankRepository.getToAccountId(transfer.get(1).getAccountNumber());
 
             bankRepository.newTransferTransactionRepository(withdrawAccountId, depositAccountId, 0,0,transfer.get(0).getAmount());
 
