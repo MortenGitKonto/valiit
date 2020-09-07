@@ -11,6 +11,19 @@ public class BankService {
     @Autowired
     private BankRepository bankRepository;
 
+    //TEE UUS ACCOUNT
+    public void newAccountService(Account account) {
+
+        bankRepository.newAccountRepository(account);
+
+    }
+
+    public void newClientService(Client client) {
+
+        bankRepository.newClientRepository(client);
+
+    }
+
     //KUTSU KÕIK PANGAKONTOD VÄLJA
     public List<Account> testAllAccountsBankService() {
 
@@ -33,13 +46,13 @@ public class BankService {
         bankRepository.updateSqlAccountNrBankRepository(account);
     }
 
+    public void updateSqlClientNrBankService(Client client) {
 
-    //TEE UUS ACCOUNT
-    public void newAccountService(Account account) {
-
-        bankRepository.newAccountRepository(account);
-
+        bankRepository.updateSqlClientNrBankRepository(client);
     }
+
+
+
 
     /////DEPOSIT
     public void sqlDepositAmountService(Account account) {
@@ -47,6 +60,8 @@ public class BankService {
         Integer currentBalance = bankRepository.selectBalanceRepository(account);
         bankRepository.sqlDepositAmountRepository(account, currentBalance);
 
+        int depositAccountId = bankRepository.getAccountId(account.getAccountNumber());
+        bankRepository.newDepositTransactionRepository(depositAccountId, account.getAmount(),0,0);
     }
 
 
@@ -59,7 +74,21 @@ public class BankService {
         } else {
             System.out.println("Not enough money in the account to make the transaction");
         }
+
+        /*Integer currentAccountId = bankRepository.getWithrawId(account.getAccountNumber());*/
+
+
+
     }
+
+
+
+
+
+
+
+
+
 
     /////TRANSFER
 
@@ -76,14 +105,7 @@ public class BankService {
         }
     }
 
-    public void newClientService(Client client) {
 
-        bankRepository.newClientRepository(client);
 
-    }
 
-    public void updateSqlClientNrBankService(Client client) {
-
-        bankRepository.updateSqlClientNrBankRepository(client);
-    }
 }

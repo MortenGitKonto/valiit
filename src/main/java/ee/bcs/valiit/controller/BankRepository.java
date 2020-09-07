@@ -14,7 +14,7 @@ public class BankRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
-    //TEE UUS KLIENT tabelisse clients
+    //UUS KLIENT
     public void newClientRepository(Client client) {
         String sql = "INSERT INTO clients (name) VALUES (:name)";
         Map<String, Object> paramMap = new HashMap();
@@ -22,7 +22,7 @@ public class BankRepository {
         template.update(sql, paramMap);
     }
 
-    //TEE UUS ACCOUNT
+    //UUS KONTO
     public void newAccountRepository(Account account) {
         String sql = "INSERT INTO bank_accounts (client_id, account_nr, balance) VALUES (:clientId, :accountNumber, :balance)";
         Map<String, Object> paramMap = new HashMap();
@@ -33,10 +33,23 @@ public class BankRepository {
         template.update(sql, paramMap);
     }
 
+    //UUS WITHDRAWAL TRANSACTION HISTORY SISSEKANNE
+    public void newDepositTransactionRepository(int depositAccountId, int deposit, int withdrawal, int transfer) {
+        String sql = "INSERT INTO transaction_history (account_id, transfer, withdrawal, deposit) VALUES (:accountId, :transfer, :withdrawal, :deposit)";
+        Map<String, Object> paramMap = new HashMap();
+        //paramMap.put("id", account.getId());
+        paramMap.put("accountId", depositAccountId);
+        paramMap.put("deposit", deposit);
+        paramMap.put("transfer", transfer);
+        paramMap.put("withdrawal", withdrawal);
+
+        template.update(sql, paramMap);
+
+    }
 
 
 
-    //KUTSU KÕIK PANGAKONTOD VÄLJA
+    //VAATA KÕIKI KONTOSID
     public List<Account> testAllAccountsBankRepository() {
 
         String sql = "select * from bank_accounts order by id";
@@ -45,7 +58,7 @@ public class BankRepository {
         return resultList;
     }
 
-    //KUTSU KÕIK KLIENDID VÄLJA
+    //VAATA KÕIKI KLIENTE
     public List<Client> testAllClientsBankRepository() {
 
         String sql = "select * from clients order by id";
@@ -66,7 +79,14 @@ public class BankRepository {
         template.update(sql, paramMap);
     }
 
+    public void updateSqlClientNrBankRepository(Client client) {
 
+        String sql = "update clients set name = :name where id= :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("id", client.getId());
+        paramMap.put("name", client.getName());
+        template.update(sql, paramMap);
+    }
 
     /////DEPOSIT JA WITHDRAW (MÕLEMAD VAJAVAD KAHT ETAPPI)
 
@@ -84,7 +104,9 @@ public class BankRepository {
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("id", account.getId());
         paramMap.put("balance", (balanceNow + account.getAmount()));
+
         template.update(sqlDeposit, paramMap);
+
     }
 
 
@@ -98,12 +120,33 @@ public class BankRepository {
     }
 
 
-    public void updateSqlClientNrBankRepository(Client client) {
 
-        String sql = "update clients set name = :name where id= :id";
+    public Integer getAccountId (String specificAccountNumber) {
+        String sql = "SELECT id FROM bank_accounts where account_nr = :accountNumber";
+
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", client.getId());
-        paramMap.put("name", client.getName());
-        template.update(sql, paramMap);
+        paramMap.put("accountNumber", specificAccountNumber);
+
+        Integer specificAccountId = template.queryForObject(sql, paramMap, Integer.class);
+
+        return specificAccountId;
     }
+
+    /*public Integer getWithrawId(String withrawAccountNumber) {
+
+        String sql = "SELECT id FROM account where account_nr = :accountNumber";
+
+
+
+    }*/
 }
+    /*public void updateSqlAccountNrBankRepository(Account account) {
+
+        String sql = "update bank_accounts set client_id = :clientId, account_nr= :accountNumber, balance= :balance where id= :id";
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("clientId", account.getClientId());
+        paramMap.put("accountNumber", account.getAccountNumber());
+        paramMap.put("balance", account.getAmount());
+        paramMap.put("id", account.getId());
+        template.update(sql, paramMap);
+    }*/

@@ -6,6 +6,23 @@ public class Account {
     private int amount;
     private int id;
     private int clientId;
+    //private int transactionId;
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
     public int getId() {
         return id;
@@ -23,19 +40,11 @@ public class Account {
         this.clientId = clientId;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    /*public int getTransactionId() {
+        return transactionId;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
+    }*/
 }

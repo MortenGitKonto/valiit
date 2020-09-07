@@ -112,7 +112,7 @@ public class BankController {
         template.update(sql, paramMap);
     }*/
 
-
+/*
     public Integer getBalance(String x) {
         return accounts.get(x);
     }
@@ -129,7 +129,7 @@ public class BankController {
         accounts.put(x, accounts.get(x) + z);
         accounts.put(y, accounts.get(y) - z);
     }
-
+*/
     //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     //Loo accounte listi
     /*@PostMapping("/addbankaccount/{a}/{b}")
