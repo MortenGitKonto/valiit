@@ -75,20 +75,9 @@ public class BankService {
             System.out.println("Not enough money in the account to make the transaction");
         }
 
-        /*Integer currentAccountId = bankRepository.getWithrawId(account.getAccountNumber());*/
-
-
-
+        int withdrawAccountId = bankRepository.getAccountId(account.getAccountNumber());
+        bankRepository.newWithdrawTransactionRepository(withdrawAccountId, 0,account.getAmount(),0);
     }
-
-
-
-
-
-
-
-
-
 
     /////TRANSFER
 
@@ -101,8 +90,23 @@ public class BankService {
         Integer currentBalanceAcc1 = bankRepository.selectBalanceRepository(transfer.get(0));
 
         if (currentBalanceAcc1 >= transfer.get(0).getAmount()) {
+
             sqlDepositAmountService(transfer.get(1));
+
+            //TRANSACTION HISTORY
+            int withdrawAccountId = bankRepository.getAccountId(transfer.get(0).getAccountNumber());
+
+            int depositAccountId = bankRepository.getAccountId(transfer.get(1).getAccountNumber());
+
+            bankRepository.newTransferTransactionRepository(withdrawAccountId, depositAccountId, 0,0,transfer.get(0).getAmount());
+
+
         }
+
+
+
+
+
     }
 
 

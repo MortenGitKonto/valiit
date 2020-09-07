@@ -33,21 +33,47 @@ public class BankRepository {
         template.update(sql, paramMap);
     }
 
-    //UUS WITHDRAWAL TRANSACTION HISTORY SISSEKANNE
-    public void newDepositTransactionRepository(int depositAccountId, int deposit, int withdrawal, int transfer) {
+    //UUS DEPOSIT TRANSACTION HISTORY SISSEKANNE
+    public void newDepositTransactionRepository(int depositAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
         String sql = "INSERT INTO transaction_history (account_id, transfer, withdrawal, deposit) VALUES (:accountId, :transfer, :withdrawal, :deposit)";
         Map<String, Object> paramMap = new HashMap();
         //paramMap.put("id", account.getId());
         paramMap.put("accountId", depositAccountId);
-        paramMap.put("deposit", deposit);
-        paramMap.put("transfer", transfer);
-        paramMap.put("withdrawal", withdrawal);
+        paramMap.put("deposit", depositAmount);
+        paramMap.put("transfer", transferAmount);
+        paramMap.put("withdrawal", withdrawalAmount);
 
         template.update(sql, paramMap);
-
     }
 
+    //UUS WITHDRAW TRANSACTION HISTORY SISSEKANNE
+    public void newWithdrawTransactionRepository(int withdrawAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
+        String sql = "INSERT INTO transaction_history (account_id, transfer, withdrawal, deposit) VALUES (:accountId, :transfer, :withdrawal, :deposit)";
+        Map<String, Object> paramMap = new HashMap();
+        //paramMap.put("id", account.getId());
+        paramMap.put("accountId", withdrawAccountId);
+        paramMap.put("deposit", depositAmount);
+        paramMap.put("transfer", transferAmount);
+        paramMap.put("withdrawal", withdrawalAmount);
 
+        template.update(sql, paramMap);
+    }
+
+    //UUS TRANSFER TRANSACTION HISTORY SISSEKANNE
+
+    // SIIA JÄIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN, VT KUIDAS TABELISSE VEERUD TEKITADA MIS PUUDU. VT KAS JSON TÖÖTAB
+    public void newTransferTransactionRepository(int withdrawAccountId, int depositAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
+        String sql = "INSERT INTO transaction_history (fromAccount_id, toAccount_id, transfer, withdrawal, deposit) VALUES (:fromAccountId, :toAccountId, :transfer, :withdrawal, :deposit)";
+        Map<String, Object> paramMap = new HashMap();
+        //paramMap.put("id", account.getId());
+        paramMap.put("fromAccountId", withdrawAccountId);
+        paramMap.put("toAccountId", depositAccountId);
+        paramMap.put("deposit", depositAmount);
+        paramMap.put("transfer", transferAmount);
+        paramMap.put("withdrawal", withdrawalAmount);
+
+        template.update(sql, paramMap);
+    }
 
     //VAATA KÕIKI KONTOSID
     public List<Account> testAllAccountsBankRepository() {
@@ -92,29 +118,26 @@ public class BankRepository {
 
     public Integer selectBalanceRepository(Account account) {
 
-        String sqlGet = "select balance from bank_accounts where id = :id";
+        String sqlGet = "select balance from bank_accounts where account_nr = :accountNumber";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", account.getId());
+        paramMap.put("accountNumber", account.getAccountNumber());
         Integer balanceNow = template.queryForObject(sqlGet, paramMap, Integer.class);
         return balanceNow;
     }
 
     public void sqlDepositAmountRepository(Account account, Integer balanceNow) {
-        String sqlDeposit = "update bank_accounts set balance= :balance where id= :id";
+        String sqlDeposit = "update bank_accounts set balance= :balance where account_nr = :accountNumber";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", account.getId());
+        paramMap.put("accountNumber", account.getAccountNumber());
         paramMap.put("balance", (balanceNow + account.getAmount()));
 
         template.update(sqlDeposit, paramMap);
-
     }
-
-
     public void sqlWithdrawAmountRepository(Account account, Integer balanceNow) {
 
-        String sqlWithdraw = "update bank_accounts set balance= :balance where id= :id";
+        String sqlWithdraw = "update bank_accounts set balance= :balance where account_nr = :accountNumber";
         Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", account.getId());
+        paramMap.put("accountNumber", account.getAccountNumber());
         paramMap.put("balance", (balanceNow - account.getAmount()));
         template.update(sqlWithdraw, paramMap);
     }
