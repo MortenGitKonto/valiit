@@ -53,11 +53,11 @@ public class BankController {
         return kontodeList;
     }
 
-    /*@GetMapping("firstAccount")
-    public Account firstAccount() {
-        Account konto = bankService.testAllAccountsBankService();
-        return kontodeList;
-    }*/
+    @GetMapping("testOneAccount")
+    public Account testOneAccount() {
+        Account konto = bankService.testOneAccountBankService();
+        return konto;
+    }
 
     //KUTSU KÕIK KLIENDID VÄLJA (tabelist clients)
 

@@ -32,6 +32,14 @@ public class BankService {
         return list;
     }
 
+    //KUTSU ÜHE PANGAKONTO VÄLJA
+    public Account testOneAccountBankService() {
+
+        Account result = bankRepository.testOneAccountBankRepository();
+
+        return result;
+    }
+
     //KUTSU KÕIK KLIENDID VÄLJA (tabelist clients)
     public List<Client> testAllClientsBankService() {
 

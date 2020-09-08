@@ -5,56 +5,68 @@
     <title>Morten</title>
 </head>
 <body>
-<span id='messages'></span>
 
-<p id="testkiri">
-    sellele tekstile olen id määranud
-    <br>
-
-    <!--<input type="button" name="ok" value="OK"/>-->
-
-    <button onclick="alert ('Hello Morten');">
-        HELLO
-    </button>
-
-    <br>
-
-    <button id="testButton2" ;>
-        Test nupp 2
-    </button>
-
-    <br>
-
-    <button id="testButton3" ;>
-        Test nupp 3
-    </button>
-
-    <button id="testButton4" ;>
-        Test nupp 4
-    </button>
-    <br>
-    <br>
-
-    <button id="testButton5" ;>
-        Test nupp 5
-    </button>
-    <br>
-    <br>
-
-    <input id="testInput" type="text">
+<br>
+<br>
 
 
-    <br>
-    <br>
+<button id="buttonAllAccounts">
+    Get info about all accounts
+</button>
+<br>
+<span id='messagesAccounts'></span>
+<br>
+<br>
+<button id="buttonAllClients" ;>
+    Get info about all accounts
+</button>
+<br>
+<span id='messagesClients'></span>
+<br>
+<br>
+<button id="buttonOneClient" ;>
+    Get info about this account
+</button>
+<br>
+<span id='messagesOneClient'></span>
+
+<br>
+<br>
+
+<!--<input id="inputAccount" type="text">-->
 
 
-    //SIIT ALATES SCRIPT - ÜKSKI TAGIGA ASI SIIA EI LÄHE!!!!!!!
+<!--    <br>-->
+<!--    <br>-->
+<!--<p id="testkiri">-->
+<!--    sellele tekstile olen id määranud-->
+<!--    <br>-->
+<!--    <br>-->
+<!---->
+<!--    <button id="testButton2" ;>-->
+<!--        Test nupp 2-->
+<!--    </button>-->
+<!---->
+<!--    <br>-->
+<!---->
+<!--    <button id="testButton3" ;>-->
+<!--        Test nupp 3-->
+<!--    </button>-->
+<!---->
+<!--    <button id="testButton4" ;>-->
+<!--        Test nupp 4-->
+<!--    </button>-->
+<!--    <br>-->
+<!--    <br>-->
+<!---->
 
-    <script>
+<!--SIIT ALATES SCRIPT - ÜKSKI TAGIGA ASI SIIA EI LÄHE!!!!!!!-->
 
-let button5 = document.getElementById("testButton5");
-let messages = document.getElementById('messages');
-button5.addEventListener('click', function(){
+<script>
+
+let buttonAllAccounts = document.getElementById("buttonAllAccounts");
+let messagesAccounts = document.getElementById('messagesAccounts');
+buttonAllAccounts.addEventListener('click', function(){
     fetch('/sqltestAllAccounts', {
 				method: 'GET',
 				cache: 'no-cache',
@@ -68,15 +80,44 @@ button5.addEventListener('click', function(){
                 //console.log(response);
 			})
 			.then(function(jsonData) {
-                
-                
-                messages.innerText = JSON.stringify(jsonData);
+                messagesAccounts.innerText = JSON.stringify(jsonData);
                 console.log(jsonData);
 				;
 			})
 			.catch(function(err) {
-                messages.innerText = 'This does not seem right';
-                console.log(messages.innerText);
+                messagesAccounts.innerText = 'This does not seem right';
+                console.log(messagesAccounts.innerText);
+			});
+
+
+        })
+
+
+        let buttonAllClients = document.getElementById("buttonAllClients");
+let messagesClients = document.getElementById('messagesClients');
+buttonAllClients.addEventListener('click', function(){
+    fetch('/sqltestAllClients', {
+				method: 'GET',
+				cache: 'no-cache',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+
+				})
+			.then(function(response) {
+                return response.json();
+                //console.log(response);
+			})
+			.then(function(jsonData) {
+
+
+                messagesClients.innerText = JSON.stringify(jsonData);
+                console.log(jsonData);
+				;
+			})
+			.catch(function(err) {
+                messagesClients.innerText = 'This does not seem right';
+                console.log(messagesClients.innerText);
 			});
 
 
@@ -86,34 +127,36 @@ button5.addEventListener('click', function(){
 
 
 
+<!--let button2 = document.getElementById("testButton2");-->
+<!--button2.onclick=function(){-->
+<!--alert("2");-->
+<!--}-->
+<!---->
+<!--let button3=document.getElementById("testButton3");-->
+<!--let action=function(){-->
+<!--alert("3");-->
+<!--}-->
+<!---->
+<!--button3.addEventListener('click',action);-->
+<!---->
+<!---->
+<!--let input = document.getElementById("testInput");-->
+<!---->
+<!---->
+<!---->
+<!--let button4 = document.getElementById("testButton4");-->
+<!--button4.onclick=function(){-->
+<!--button4.innerHTML=input.value;-->
+<!--}-->
 
 
 
-let button2 = document.getElementById("testButton2");
-button2.onclick=function(){
-alert("2");
-}
-
-let button3=document.getElementById("testButton3");
-let action=function(){
-alert("3");
-}
-
-button3.addEventListener('click',action);
-
-
-let input = document.getElementById("testInput");
 
 
 
-let button4 = document.getElementById("testButton4");
-button4.onclick=function(){
-button4.innerHTML=input.value;
-}
+
+
 </script>
-
-
-
 
 
 <!--let element = document.getElementById("testkiri");-->
@@ -146,7 +189,6 @@ button4.innerHTML=input.value;
 <!--}-->
 
 
-
 <!--let a=1;-->
 <!--while(a<10){-->
 <!--console.log(a);-->
@@ -162,62 +204,65 @@ button4.innerHTML=input.value;
 <!--    alert('Hello, world');    //PROOVI SEDA!!!-->
 
 
+<!--    <img src="slider_puffin_jpegmini_mobile.jpg"/>-->
+<!--    <br>-->
+<!---->
+<!--    <a href="https://www.google.com/search?q=image&rlz=1C1GCEV_enEE915EE915&sxsrf=ALeKk01qGqwHXkS0PaJZshubGKG7hSISvg:1599475424812&tbm=isch&source=iu&ictx=1&fir=G1_Vs888uiu6-M%252C2DOK0HM4QCJg-M%252C_&vet=1&usg=AI4_-kS5ZeeN3ZTVPytdzBMw6npnHGrHDQ&sa=X&ved=2ahUKEwjHg5ek7tbrAhWmlYsKHdkDCDMQ9QF6BAgKEF8&biw=1536&bih=754#imgrc=G1_Vs888uiu6-M">Pilt-->
+<!--        siit</a>-->
+<!---->
+<!--<h2 id="book">My books</h2>-->
+<!--<ul>-->
+<!--    <li>Raamat 1</li>-->
+<!--    <li>Raamat 2</li>-->
+<!--    <li>Raamat 3</li>-->
+<!--</ul>-->
+<!--<br>-->
+<!--<ol>-->
+<!--    <li>Raamat 1</li>-->
+<!--    <li>Raamat 2</li>-->
+<!--    <li>Raamat 3</li>-->
+<!--</ol>-->
+<!---->
+<!--<dl>-->
+<!---->
+<!--    <dt>Suur</dt>-->
+<!--    <dd>Mitteväike</dd>-->
+<!--</dl>-->
 
 
-    <img src="slider_puffin_jpegmini_mobile.jpg"/>
-    <br>
-
-    <a href="https://www.google.com/search?q=image&rlz=1C1GCEV_enEE915EE915&sxsrf=ALeKk01qGqwHXkS0PaJZshubGKG7hSISvg:1599475424812&tbm=isch&source=iu&ictx=1&fir=G1_Vs888uiu6-M%252C2DOK0HM4QCJg-M%252C_&vet=1&usg=AI4_-kS5ZeeN3ZTVPytdzBMw6npnHGrHDQ&sa=X&ved=2ahUKEwjHg5ek7tbrAhWmlYsKHdkDCDMQ9QF6BAgKEF8&biw=1536&bih=754#imgrc=G1_Vs888uiu6-M">Pilt
-        siit</a>
-
-<h2 id="book">My books</h2>
-<ul>
-    <li>Raamat 1</li>
-    <li>Raamat 2</li>
-    <li>Raamat 3</li>
-</ul>
-<br>
-<ol>
-    <li>Raamat 1</li>
-    <li>Raamat 2</li>
-    <li>Raamat 3</li>
-</ol>
-
-<dl>
-
-    <dt>Suur</dt>
-    <dd>Mitteväike</dd>
-</dl>
+<!--<br>-->
+<!---->
+<!--<table width="250px" border="1">-->
+<!--    <tr align="center" valign="top">-->
+<!--        <td height="30">1</td>-->
+<!--        <td height="30">2</td>-->
+<!--        <td height="30">3</td>-->
+<!--    </tr>-->
+<!--    <tr align="center">-->
+<!--        <td height="30"><input type="button" name="Vajuta siia"></td>-->
+<!--        <td height="30">Joosua</td>-->
+<!--        <td height="30">Jaanus</td>-->
+<!--    </tr>-->
+<!--    <tr align="center" valign="bottom">-->
+<!--        <td height="30">mees 1</td>-->
+<!--        <td height="30">mees 2</td>-->
+<!--        <td height="30">mees 3</td>-->
+<!--    </tr>-->
 
 
-<br>
+<!--</table>-->
+<!--<input type="image" name="imagebutton" src="slider_puffin_jpegmini_mobile.jpg">-->
+<!--<br>-->
+<!--<br>-->
+<!--<input type="password" name="Parka">-->
+<!--<br>-->
 
-<table width="250px" border="1">
-    <tr align="center" valign="top">
-        <td height="30">1</td>
-        <td height="30">2</td>
-        <td height="30">3</td>
-    </tr>
-    <tr align="center">
-        <td height="30"><input type="button" name="Vajuta siia"></td>
-        <td height="30">Joosua</td>
-        <td height="30">Jaanus</td>
-    </tr>
-    <tr align="center" valign="bottom">
-        <td height="30">mees 1</td>
-        <td height="30">mees 2</td>
-        <td height="30">mees 3</td>
-    </tr>
+<!--<input type="checkbox">-->
 
-
-</table>
-<input type="image" name="imagebutton" src="slider_puffin_jpegmini_mobile.jpg">
-<br>
-<br>
-<input type="password" name="Parka">
-<br>
-
-<input type="checkbox">
-
+<!--<button onclick="alert ('Hello Morten');">-->
+<!--    HELLO-->
+<!--</button>-->
 </body>
+
+
 </html>
