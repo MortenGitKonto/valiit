@@ -85,17 +85,13 @@ public class BankRepository {
     }
 
     //VAATA ÜHT KONTOT
-    public Account testOneAccountBankRepository() {
+    public Account testOneAccountBankRepository(int id) {
 
         String sql = "select id, client_id, account_nr, balance from bank_accounts where id=:id";
         Map<String, Object> paramMap = new HashMap();
-
-        paramMap.put("clientId", account.getClientId());
-        paramMap.put("accountNumber", account.getAccountNumber());
-        paramMap.put("balance", account.getAmount());
-        paramMap.put("id", account.getId());
-
-        Account result = template.query(sql, paramMap, Account.class);
+        paramMap.put("id", id);
+//PROBLEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEM
+        Account result = (Account) template.query(sql, paramMap, new ObjectRowMapper());
         return result;
     }
 

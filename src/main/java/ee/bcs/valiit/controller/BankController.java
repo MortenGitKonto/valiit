@@ -54,9 +54,9 @@ public class BankController {
     }
 
     @GetMapping("testOneAccount")
-    public Account testOneAccount() {
-        Account konto = bankService.testOneAccountBankService();
-        return konto;
+    public Account testOneAccount(@RequestBody Account account) {
+        Account result = bankService.testOneAccountBankService(account.getId());
+        return result;
     }
 
     //KUTSU KÕIK KLIENDID VÄLJA (tabelist clients)

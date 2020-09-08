@@ -33,9 +33,9 @@ public class BankService {
     }
 
     //KUTSU ÜHE PANGAKONTO VÄLJA
-    public Account testOneAccountBankService() {
+    public Account testOneAccountBankService(int id) {
 
-        Account result = bankRepository.testOneAccountBankRepository();
+        Account result = bankRepository.testOneAccountBankRepository(id);
 
         return result;
     }
