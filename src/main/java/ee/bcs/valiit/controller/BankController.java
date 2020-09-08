@@ -54,8 +54,8 @@ public class BankController {
     }
 
     @GetMapping("testOneAccount")
-    public Account testOneAccount(@RequestBody Account account) {
-        Account result = bankService.testOneAccountBankService(account.getId());
+    public List<Account> testOneAccount(@RequestBody Account account) {
+        List<Account> result = bankService.testOneAccountBankService(account.getId());
         return result;
     }
 
