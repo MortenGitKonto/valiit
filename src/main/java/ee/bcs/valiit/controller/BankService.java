@@ -52,8 +52,6 @@ public class BankService {
     }
 
 
-
-
     /////DEPOSIT
     public void sqlDepositAmountService(Account account) {
 
@@ -61,7 +59,7 @@ public class BankService {
         bankRepository.sqlDepositAmountRepository(account, currentBalance);
 
         int depositAccountId = bankRepository.getToAccountId(account.getAccountNumber());
-        bankRepository.newDepositTransactionRepository(depositAccountId, account.getAmount(),0,0);
+        bankRepository.newDepositTransactionRepository(depositAccountId, account.getAmount(), 0, 0);
     }
 
 
@@ -76,7 +74,7 @@ public class BankService {
         }
 
         int withdrawAccountId = bankRepository.getFromAccountId(account.getAccountNumber());
-        bankRepository.newWithdrawTransactionRepository(withdrawAccountId, 0,account.getAmount(),0);
+        bankRepository.newWithdrawTransactionRepository(withdrawAccountId, 0, account.getAmount(), 0);
     }
 
     /////TRANSFER
@@ -98,18 +96,15 @@ public class BankService {
 
             int depositAccountId = bankRepository.getToAccountId(transfer.get(1).getAccountNumber());
 
-            bankRepository.newTransferTransactionRepository(withdrawAccountId, depositAccountId, 0,0,transfer.get(0).getAmount());
+            bankRepository.newTransferTransactionRepository(withdrawAccountId, depositAccountId, 0, 0, transfer.get(0).getAmount());
 
 
         }
 
 
-
-
-
     }
-
-
-
-
 }
+
+
+
+

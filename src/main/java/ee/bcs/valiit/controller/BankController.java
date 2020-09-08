@@ -39,6 +39,12 @@ public class BankController {
         template.update(sql, paramMap);
     }*/
 
+    @GetMapping("test")
+    public String test() {
+        String x="Morten";
+        return x;
+    }
+
     //KUTSU KÕIK PANGAKONTOD VÄLJA (tabelist bank_accounts)
 
     @GetMapping("sqltestAllAccounts")
@@ -46,6 +52,12 @@ public class BankController {
         List<Account> kontodeList = bankService.testAllAccountsBankService();
         return kontodeList;
     }
+
+    /*@GetMapping("firstAccount")
+    public Account firstAccount() {
+        Account konto = bankService.testAllAccountsBankService();
+        return kontodeList;
+    }*/
 
     //KUTSU KÕIK KLIENDID VÄLJA (tabelist clients)
 

@@ -5,12 +5,170 @@
     <title>Morten</title>
 </head>
 <body>
+<span id='messages'></span>
 
-<img src="slider_puffin_jpegmini_mobile.jpg"/>
-<br>
+<p id="testkiri">
+    sellele tekstile olen id määranud
+    <br>
 
-<a href="https://www.google.com/search?q=image&rlz=1C1GCEV_enEE915EE915&sxsrf=ALeKk01qGqwHXkS0PaJZshubGKG7hSISvg:1599475424812&tbm=isch&source=iu&ictx=1&fir=G1_Vs888uiu6-M%252C2DOK0HM4QCJg-M%252C_&vet=1&usg=AI4_-kS5ZeeN3ZTVPytdzBMw6npnHGrHDQ&sa=X&ved=2ahUKEwjHg5ek7tbrAhWmlYsKHdkDCDMQ9QF6BAgKEF8&biw=1536&bih=754#imgrc=G1_Vs888uiu6-M">Pilt
-    siit</a>
+    <!--<input type="button" name="ok" value="OK"/>-->
+
+    <button onclick="alert ('Hello Morten');">
+        HELLO
+    </button>
+
+    <br>
+
+    <button id="testButton2" ;>
+        Test nupp 2
+    </button>
+
+    <br>
+
+    <button id="testButton3" ;>
+        Test nupp 3
+    </button>
+
+    <button id="testButton4" ;>
+        Test nupp 4
+    </button>
+    <br>
+    <br>
+
+    <button id="testButton5" ;>
+        Test nupp 5
+    </button>
+    <br>
+    <br>
+
+    <input id="testInput" type="text">
+
+
+    <br>
+    <br>
+
+
+    //SIIT ALATES SCRIPT - ÜKSKI TAGIGA ASI SIIA EI LÄHE!!!!!!!
+
+    <script>
+
+let button5 = document.getElementById("testButton5");
+let messages = document.getElementById('messages');
+button5.addEventListener('click', function(){
+    fetch('/sqltestAllAccounts', {
+				method: 'GET',
+				cache: 'no-cache',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+				
+				})
+			.then(function(response) {
+                return response.json();
+                //console.log(response);
+			})
+			.then(function(jsonData) {
+                
+                
+                messages.innerText = JSON.stringify(jsonData);
+                console.log(jsonData);
+				;
+			})
+			.catch(function(err) {
+                messages.innerText = 'This does not seem right';
+                console.log(messages.innerText);
+			});
+
+
+        })
+
+
+
+
+
+
+
+
+let button2 = document.getElementById("testButton2");
+button2.onclick=function(){
+alert("2");
+}
+
+let button3=document.getElementById("testButton3");
+let action=function(){
+alert("3");
+}
+
+button3.addEventListener('click',action);
+
+
+let input = document.getElementById("testInput");
+
+
+
+let button4 = document.getElementById("testButton4");
+button4.onclick=function(){
+button4.innerHTML=input.value;
+}
+</script>
+
+
+
+
+
+<!--let element = document.getElementById("testkiri");-->
+<!--console.log(element);-->
+<!--console.log(element.innerHTML);-->
+<!--element.innerHTML="joujoujou";-->
+<!--</button>-->
+
+<!--</p>-->
+
+
+<!--function calculateLoan (amount, months, interest=10,name="John"){-->
+<!--    console.log(amount);-->
+<!--    console.log(months);-->
+<!--    console.log(interest);-->
+<!--    console.log(name);-->
+<!--}-->
+<!---->
+<!--calculateLoan (36,8)-->
+
+
+<!--function myFunctionTwo(){-->
+<!--//Stuff-->
+<!--    -->
+<!--}-->
+<!---->
+<!--function myFunctionOne(){-->
+<!--//Stuff-->
+<!--myFunctionTwo();-->
+<!--}-->
+
+
+
+<!--let a=1;-->
+<!--while(a<10){-->
+<!--console.log(a);-->
+<!--a++;-->
+<!--}-->
+
+<!--let a="5";-->
+<!--let b=5;-->
+<!--if(a===b){-->
+<!--alert('võrdne')}-->
+<!--else{-->
+<!--alert('mine .....')}-->
+<!--    alert('Hello, world');    //PROOVI SEDA!!!-->
+
+
+
+
+    <img src="slider_puffin_jpegmini_mobile.jpg"/>
+    <br>
+
+    <a href="https://www.google.com/search?q=image&rlz=1C1GCEV_enEE915EE915&sxsrf=ALeKk01qGqwHXkS0PaJZshubGKG7hSISvg:1599475424812&tbm=isch&source=iu&ictx=1&fir=G1_Vs888uiu6-M%252C2DOK0HM4QCJg-M%252C_&vet=1&usg=AI4_-kS5ZeeN3ZTVPytdzBMw6npnHGrHDQ&sa=X&ved=2ahUKEwjHg5ek7tbrAhWmlYsKHdkDCDMQ9QF6BAgKEF8&biw=1536&bih=754#imgrc=G1_Vs888uiu6-M">Pilt
+        siit</a>
 
 <h2 id="book">My books</h2>
 <ul>

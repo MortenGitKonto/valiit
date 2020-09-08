@@ -32,11 +32,11 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="fromAccount_id" type="int">
+            <column name="fromaccount_id" type="int">
                 <constraints nullable="true" foreignKeyName="fk_transactionHistory_bankAccount" references="bank_accounts(id)"/>
             </column>
-            <column name="toAccount_id" type="int">
-                <constraints nullable="true" foreignKeyName="fk_transactionHistory_bankAccount" references="bank_accounts(id)"/>
+            <column name="toaccount_id" type="int">
+                <constraints nullable="true" foreignKeyName="fk_transactionHistory2_bankAccount" references="bank_accounts(id)"/>
             </column>
             <column name="transfer" type="int">
             </column>

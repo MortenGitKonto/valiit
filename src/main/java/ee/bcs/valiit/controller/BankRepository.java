@@ -35,7 +35,7 @@ public class BankRepository {
 
     //UUS DEPOSIT TRANSACTION HISTORY SISSEKANNE
     public void newDepositTransactionRepository(int depositAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
-        String sql = "INSERT INTO transaction_history (toAccount_id, transfer, withdrawal, deposit) VALUES (:toAccountId, :transfer, :withdrawal, :deposit)";
+        String sql = "INSERT INTO transaction_history (toaccount_id, transfer, withdrawal, deposit) VALUES (:toAccountId, :transfer, :withdrawal, :deposit)";
         Map<String, Object> paramMap = new HashMap();
         //paramMap.put("id", account.getId());
         paramMap.put("toAccountId", depositAccountId);
@@ -48,7 +48,7 @@ public class BankRepository {
 
     //UUS WITHDRAW TRANSACTION HISTORY SISSEKANNE
     public void newWithdrawTransactionRepository(int withdrawAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
-        String sql = "INSERT INTO transaction_history (fromAccount_id, transfer, withdrawal, deposit) VALUES (:fromAccountId, :transfer, :withdrawal, :deposit)";
+        String sql = "INSERT INTO transaction_history (fromaccount_id, transfer, withdrawal, deposit) VALUES (:fromAccountId, :transfer, :withdrawal, :deposit)";
         Map<String, Object> paramMap = new HashMap();
         //paramMap.put("id", account.getId());
         paramMap.put("fromAccountId", withdrawAccountId);
@@ -63,7 +63,7 @@ public class BankRepository {
 
     // SIIA JÄIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIN, VT KUIDAS TABELISSE VEERUD TEKITADA MIS PUUDU. VT KAS JSON TÖÖTAB
     public void newTransferTransactionRepository(int withdrawAccountId, int depositAccountId, int depositAmount, int withdrawalAmount, int transferAmount) {
-        String sql = "INSERT INTO transaction_history (fromAccount_id, toAccount_id, transfer, withdrawal, deposit) VALUES (:fromAccountId, :toAccountId, :transfer, :withdrawal, :deposit)";
+        String sql = "INSERT INTO transaction_history (fromaccount_id, toaccount_id, transfer, withdrawal, deposit) VALUES (:fromAccountId, :toAccountId, :transfer, :withdrawal, :deposit)";
         Map<String, Object> paramMap = new HashMap();
         //paramMap.put("id", account.getId());
         paramMap.put("fromAccountId", withdrawAccountId);
