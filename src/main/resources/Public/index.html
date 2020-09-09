@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Morten</title>
+<!--    <link rel="stylesheet" href="style.css">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
 
@@ -17,23 +19,88 @@
 <span id='messagesAccounts'></span>
 <br>
 <br>
-<button id="buttonAllClients" ;>
-    Get info about all accounts
+<button id="buttonAllClients">
+    Get info about all clients
 </button>
 <br>
 <span id='messagesClients'></span>
 <br>
 <br>
-<button id="buttonOneAccount" ;>
+
+
+<button id="buttonOneAccount">
     Get info about this account
 </button>
 <br>
-<input id="inputIdForAccount" type="text">
-<br>
-<span id='messagesOneAccount'></span>
 
+<input id="inputClientIdForAccount" type="number" placeholder="Enter clientId">
+<br>
+
+<span id='messagesOneAccount'></span>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
+
+<button id="buttonCreateAccount">
+    Create account
+</button>
+<br>
+<input id="inputClientIdForCreateAccount" type="number" placeholder="Enter clientId">
+<input id="inputAccountNrForCreateAccount" type="text" placeholder="Enter account nr">
+<input id="inputBalanceForCreateAccount" type="number" placeholder="Enter balance">
+<br>
+
+<span id='messagesCreateAccount'></span>
+<br>
+<br>
+<br>
+<br>
+
+<button id="buttonMakeDeposit">
+   Deposit
+</button>
+<br>
+<input id="inputDepositAmount" type="number" placeholder="Enter amount">
+<input id="inputDepositAccountNr" type="text" placeholder="Enter account nr">
+<br>
+
+<span id='messagesDeposit'></span>
+<br>
+<br>
+<br>
+<br>
+
+<button id="buttonWithdraw">
+    Withdraw
+ </button>
+ <br>
+ <input id="inputWithdrawAmount" type="number" placeholder="Enter amount">
+ <input id="inputWithdrawAccountNr" type="text" placeholder="Enter account nr">
+ <br>
+ 
+ <span id='messagesWithdraw'></span>
+ <br>
+ <br>
+ <br>
+ <br>
+
+ <button id="buttonTransfer">
+    Transfer
+ </button>
+ <br>
+ <input id="inputFromAccountNr" type="text" placeholder="Enter account nr">
+ <input id="inputFromAmount" type="number" placeholder="Enter amount">
+ <input id="inputToAccountNr" type="text" placeholder="Enter account nr">
+ <input id="inputToAmount" type="number" placeholder="Enter amount">
+ 
+ <br>
+ 
+ <span id='messagesTransfer'></span>
+
+
 
 
 
@@ -68,6 +135,7 @@
 
 let buttonAllAccounts = document.getElementById("buttonAllAccounts");
 let messagesAccounts = document.getElementById('messagesAccounts');
+
 buttonAllAccounts.addEventListener('click', function(){
     fetch('/sqltestAllAccounts', {
 				method: 'GET',
@@ -97,6 +165,7 @@ buttonAllAccounts.addEventListener('click', function(){
 
         let buttonAllClients = document.getElementById("buttonAllClients");
 let messagesClients = document.getElementById('messagesClients');
+
 buttonAllClients.addEventListener('click', function(){
     fetch('/sqltestAllClients', {
 				method: 'GET',
@@ -108,13 +177,13 @@ buttonAllClients.addEventListener('click', function(){
 				})
 			.then(function(response) {
                 return response.json();
-                //console.log(response);
+                console.log(response.json());
 			})
 			.then(function(jsonData) {
 
 
                 messagesClients.innerText = JSON.stringify(jsonData);
-                console.log(jsonData);
+                console.log(messagesClients.innerText);
 				;
 			})
 			.catch(function(err) {
@@ -124,38 +193,206 @@ buttonAllClients.addEventListener('click', function(){
 
 
         })
-let inputIdForAcc = document.getElementById("inputIdForAccount");
-        
+
+let inputIdForAcc = document.getElementById("inputClientIdForAccount");
 let buttonOneAccount = document.getElementById("buttonOneAccount");
 let messagesOneAccount = document.getElementById('messagesOneAccount');
+
 buttonOneAccount.addEventListener('click', function(){
-    fetch('/testOneAccount', {
+    fetch('/testOneAccount/'+inputIdForAcc.value, {
 				method: 'GET',
 				cache: 'no-cache',
 				headers: {
 					'Content-Type': 'application/json'
-				}
-//json BODYYYYYYYYYYYY ?????
-<!--button4.innerHTML=inputIdForAcc.value;-->
-
-
+                }
 				})
 			.then(function(response) {
                 return response.json();
-                //console.log(response);
+<!--                console.log(response);-->
 			})
 			.then(function(jsonData) {
                 messagesOneAccount.innerText = JSON.stringify(jsonData);
-                console.log(jsonData);
-				;
+                console.log(messagesOneAccount.innerText);
+
 			})
 			.catch(function(err) {
+<!--                console.log(err);-->
                 messagesOneAccount.innerText = 'This does not seem right';
-                console.log(messagesOneAccount.innerText);
+<!--                console.log(messagesOneAccount.innerText);-->
 			});
-
-
         })
+
+
+
+
+
+//INPUT
+let inputClientIdForCreateAcc = document.getElementById("inputClientIdForCreateAccount");
+let inputAccountNrForCreateAccount = document.getElementById("inputAccountNrForCreateAccount");
+let inputBalanceForCreateAccount = document.getElementById("inputBalanceForCreateAccount");
+
+//BUTTON
+let buttonCreateAccount = document.getElementById("buttonCreateAccount");
+
+//MESSAGE
+let messagesCreateAccount = document.getElementById('messagesCreateAccount');
+
+buttonCreateAccount.addEventListener('click', function(){
+    fetch('/sqlNewAccount', {
+				method: 'POST',
+				cache: 'no-cache',
+				headers: {
+					'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    clientId: inputClientIdForCreateAcc.value,
+                    accountNumber: inputAccountNrForCreateAccount.value,
+                    amount: inputBalanceForCreateAccount.value
+                })
+				})
+			.then(function() {
+                messagesCreateAccount.innerText = 'Success';
+			})
+			.catch(function(err) {
+                console.log(err);
+                messagesCreateAccount.innerText = 'This does not seem right';
+			});
+        })
+
+
+
+        
+
+
+//INPUT
+let inputDepositAmount = document.getElementById("inputDepositAmount");
+let inputDepositAccountNr = document.getElementById("inputDepositAccountNr");
+
+//BUTTON
+let buttonMakeDeposit = document.getElementById("buttonMakeDeposit");
+
+//MESSAGE
+let messagesDeposit = document.getElementById('messagesDeposit');
+
+buttonMakeDeposit.addEventListener('click', function(){
+    fetch('/sqlDepositIntoAccount', {
+				method: 'PUT',
+				cache: 'no-cache',
+				headers: {
+					'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    accountNumber: inputDepositAccountNr.value,
+                    amount: inputDepositAmount.value
+                })
+				})
+			.then(function() {
+                messagesDeposit.innerText = 'Success';
+			})
+			.catch(function(err) {
+                console.log(err);
+                messagesDeposit.innerText = 'This does not seem right';
+			});
+        })
+
+
+//INPUT
+let inputWithdrawAmount = document.getElementById("inputWithdrawAmount");
+let inputWithdrawAccountNr = document.getElementById("inputWithdrawAccountNr");
+
+//BUTTON
+let buttonWithdraw = document.getElementById("buttonWithdraw");
+
+//MESSAGE
+let messagesWithdraw = document.getElementById('messagesWithdraw');
+
+buttonWithdraw.addEventListener('click', function(){
+    fetch('/sqlWithdrawFromAccount', {
+				method: 'PUT',
+				cache: 'no-cache',
+				headers: {
+					'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    accountNumber: inputWithdrawAccountNr.value,
+                    amount: inputWithdrawAmount.value
+                })
+				})
+			.then(function() {
+                messagesWithdraw.innerText = 'Success';
+			})
+			.catch(function(err) {
+                console.log(err);
+                messagesWithdraw.innerText = 'This does not seem right';
+			});
+        })
+
+
+
+
+
+
+ //INPUT
+let inputFromAccountNr = document.getElementById("inputFromAccountNr");
+let inputFromAmount = document.getElementById("inputFromAmount");
+let inputToAccountNr = document.getElementById("inputToAccountNr");
+let inputToAmount = document.getElementById("inputToAmount");
+
+//BUTTON
+let buttonTransfer = document.getElementById("buttonTransfer");
+
+//MESSAGE
+let messagesTransfer = document.getElementById('messagesTransfer');
+
+buttonTransfer.addEventListener('click', function(){
+    fetch('/sqlTransferFromAccountToAccount', {
+				method: 'PUT',
+				cache: 'no-cache',
+				headers: {
+					'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                   [ {
+                    accountNumber: inputFromAccountNr.value,
+                    amount: inputFromAmount.value
+                },{
+                    accountNumber: inputToAccountNr.value,
+                    amount: inputToAmount.value
+
+                }]
+                )
+				})
+			.then(function() {
+                messagesTransfer.innerText = 'Success';
+			})
+			.catch(function(err) {
+                console.log(err);
+                messagesTransfer.innerText = 'This does not seem right';
+			});
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -180,6 +417,7 @@ buttonOneAccount.addEventListener('click', function(){
 <!--button4.onclick=function(){-->
 <!--button4.innerHTML=input.value;-->
 <!--}-->
+
 
 
 
@@ -242,28 +480,28 @@ buttonOneAccount.addEventListener('click', function(){
 <!--    <a href="https://www.google.com/search?q=image&rlz=1C1GCEV_enEE915EE915&sxsrf=ALeKk01qGqwHXkS0PaJZshubGKG7hSISvg:1599475424812&tbm=isch&source=iu&ictx=1&fir=G1_Vs888uiu6-M%252C2DOK0HM4QCJg-M%252C_&vet=1&usg=AI4_-kS5ZeeN3ZTVPytdzBMw6npnHGrHDQ&sa=X&ved=2ahUKEwjHg5ek7tbrAhWmlYsKHdkDCDMQ9QF6BAgKEF8&biw=1536&bih=754#imgrc=G1_Vs888uiu6-M">Pilt-->
 <!--        siit</a>-->
 <!---->
-<!--<h2 id="book">My books</h2>-->
-<!--<ul>-->
-<!--    <li>Raamat 1</li>-->
-<!--    <li>Raamat 2</li>-->
-<!--    <li>Raamat 3</li>-->
-<!--</ul>-->
-<!--<br>-->
-<!--<ol>-->
-<!--    <li>Raamat 1</li>-->
-<!--    <li>Raamat 2</li>-->
-<!--    <li>Raamat 3</li>-->
-<!--</ol>-->
-<!---->
-<!--<dl>-->
-<!---->
-<!--    <dt>Suur</dt>-->
-<!--    <dd>Mitteväike</dd>-->
-<!--</dl>-->
+<h2 id="book">My books</h2>
+<ul>
+    <li>Raamat 1</li>
+    <li>Raamat 2</li>
+    <li>Raamat 3</li>
+</ul>
+<br>
+<ol>
+    <li>Raamat 1</li>
+    <li>Raamat 2</li>
+    <li>Raamat 3</li>
+</ol>
 
+<dl>
 
-<!--<br>-->
+    <dt>Suur</dt>
+    <dd>Mitteväike</dd>
+</dl>
 <!---->
+<!---->
+<br>
+
 <!--<table width="250px" border="1">-->
 <!--    <tr align="center" valign="top">-->
 <!--        <td height="30">1</td>-->

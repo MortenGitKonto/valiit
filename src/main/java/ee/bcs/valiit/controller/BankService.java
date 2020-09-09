@@ -33,9 +33,9 @@ public class BankService {
     }
 
     //KUTSU ÜHE PANGAKONTO VÄLJA
-    public List<Account>  testOneAccountBankService(int id) {
+    public List<Account>  testOneAccountBankService(int clientId) {
 
-        List<Account> result = bankRepository.testOneAccountBankRepository(id);
+        List<Account> result = bankRepository.testOneAccountBankRepository(clientId);
 
         return result;
     }

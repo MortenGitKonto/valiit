@@ -52,10 +52,10 @@ public class BankController {
         List<Account> kontodeList = bankService.testAllAccountsBankService();
         return kontodeList;
     }
-
-    @GetMapping("testOneAccount")
-    public List<Account> testOneAccount(@RequestBody Account account) {
-        List<Account> result = bankService.testOneAccountBankService(account.getId());
+//
+    @GetMapping("testOneAccount/{a}")
+    public List<Account> testOneAccount(@PathVariable("a") int clientId) {
+        List<Account> result = bankService.testOneAccountBankService(clientId);
         return result;
     }
 
