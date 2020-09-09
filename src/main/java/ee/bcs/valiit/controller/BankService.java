@@ -64,7 +64,8 @@ public class BankService {
     public void sqlDepositAmountService(Account account) {
 
         Integer currentBalance = bankRepository.selectBalanceRepository(account);
-        bankRepository.sqlDepositAmountRepository(account, currentBalance);
+        Integer depositAmount = account.getAmount();
+        bankRepository.sqlDepositAmountRepository(account, currentBalance, depositAmount);
 
         int depositAccountId = bankRepository.getToAccountId(account.getAccountNumber());
         bankRepository.newDepositTransactionRepository(depositAccountId, account.getAmount(), 0, 0);
@@ -89,23 +90,24 @@ public class BankService {
 
     public void sqlTransferAmountService(List<Account> transfer) {
 
-        //Kutsun withdraw välja, töötab tingimusel mis on selle withdraw funktsiooni sees (ehk kui on raha)
-        sqlWithdrawAmountService(transfer.get(0));
 
         //Deklareerin muutuja currentBalance (konto nr1 kohta), ehk kui kontol 1 on vähemalt "amount" siis toimub ülekanne kontole 2
         Integer currentBalanceAcc1 = bankRepository.selectBalanceRepository(transfer.get(0));
 
         if (currentBalanceAcc1 >= transfer.get(0).getAmount()) {
 
-            sqlDepositAmountService(transfer.get(1));
+            sqlWithdrawAmountService(transfer.get(0));
+
+            //sqlDepositAmountService(transfer.get(1));
+            Integer currentBalanceAcc2 = bankRepository.selectBalanceRepository(transfer.get(1));
+            Integer depositAmount = transfer.get(0).getAmount();
+            bankRepository.sqlDepositAmountRepository(transfer.get(1), currentBalanceAcc2, depositAmount);
 
             //TRANSACTION HISTORY
             int withdrawAccountId = bankRepository.getFromAccountId(transfer.get(0).getAccountNumber());
 
             int depositAccountId = bankRepository.getToAccountId(transfer.get(1).getAccountNumber());
-
             bankRepository.newTransferTransactionRepository(withdrawAccountId, depositAccountId, 0, 0, transfer.get(0).getAmount());
-
 
         }
 

@@ -137,11 +137,11 @@ public class BankRepository {
         return balanceNow;
     }
 
-    public void sqlDepositAmountRepository(Account account, Integer balanceNow) {
+    public void sqlDepositAmountRepository(Account account, Integer balanceNow, Integer depositAmount) {
         String sqlDeposit = "update bank_accounts set balance= :balance where account_nr = :accountNumber";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("accountNumber", account.getAccountNumber());
-        paramMap.put("balance", (balanceNow + account.getAmount()));
+        paramMap.put("balance", (balanceNow + depositAmount));
 
         template.update(sqlDeposit, paramMap);
     }
