@@ -19,14 +19,13 @@ public class BankController {
     @Autowired
     private BankService bankService;
     ////////////////////////////////////////////////////////////////////////////////////
-    /*@GetMapping("sqltestBalance")
-    public String testSql() {
-        String sql = "select balance from bank_accounts where id = :id";
-        Map<String, Object> paramMap = new HashMap();
-        paramMap.put("id", 2);
-        String vastus = template.queryForObject(sql, paramMap, String.class);
+
+    //Get balance from one account
+    @GetMapping("sqltestBalance/{a}")
+    public Integer testBalance(@PathVariable("a") String specificAccountNumber) {
+       Integer vastus = bankService.testBalance(specificAccountNumber);
         return vastus;
-    }*/
+    }
 
     /*@PutMapping("sqlUpdateAccountInfo")
     public void updateSqlAccountNr() {

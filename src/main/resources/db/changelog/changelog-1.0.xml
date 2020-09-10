@@ -46,4 +46,20 @@
             </column>
         </createTable>
     </changeSet>
+
+
+    <changeSet id="add username and password columns" author="Morten">
+        <addColumn tableName="clients">
+            <column name="username" type="text">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="clients">
+            <column name="password" type="text">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+
 </databaseChangeLog>

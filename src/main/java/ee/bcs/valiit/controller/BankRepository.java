@@ -15,10 +15,12 @@ public class BankRepository {
     private NamedParameterJdbcTemplate template;
 
     //UUS KLIENT
-    public void newClientRepository(Client client) {
-        String sql = "INSERT INTO clients (name) VALUES (:name)";
+    public void newClientRepository(Client client, String encodedPassword) {
+        String sql = "INSERT INTO clients (name, username, password) VALUES (:name, :username, :password)";
         Map<String, Object> paramMap = new HashMap();
         paramMap.put("name", client.getName());
+        paramMap.put("username", client.getUsername());
+        paramMap.put("password", encodedPassword);
         template.update(sql, paramMap);
     }
 
@@ -176,6 +178,33 @@ public class BankRepository {
         Integer toAccountId = template.queryForObject(sql, paramMap, Integer.class);
 
         return toAccountId;
+    }
+
+    ////Get parooli HASH, et saaks parooli vastavust tsekkida
+    public String getPassword (String username) {
+        String sql = "SELECT password FROM clients where username = :username";
+
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("username", username);
+
+        String password = template.queryForObject(sql, paramMap, String.class);
+
+        return password;
+    }
+
+
+
+
+
+
+    public Integer testBalance(String specificAccountNumber) {
+        String sql = "select balance from bank_accounts where account_nr = :accountNr";
+
+        Map<String, Object> paramMap = new HashMap();
+        paramMap.put("accountNr", specificAccountNumber);
+
+        Integer balance = template.queryForObject(sql, paramMap, Integer.class);
+        return balance;
     }
 
     /*public Integer getWithrawId(String withrawAccountNumber) {

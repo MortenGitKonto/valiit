@@ -1,4 +1,4 @@
-/*package ee.bcs.valiit.controller;
+package ee.bcs.valiit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -9,16 +9,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
+    @Autowired
+    private BankRepository bankRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
 
     @Override
     public UserDetails loadUserByUsername(String username){
-
-        return User.withUsername("Morten")
-                .password(passwordEncoder.encode("parool"))
+        String password = bankRepository.getPassword(username);
+        return User.withUsername(username)
+                .password(passwordEncoder.encode(password))
                 .roles("USER").build();
     }
 }
-*/

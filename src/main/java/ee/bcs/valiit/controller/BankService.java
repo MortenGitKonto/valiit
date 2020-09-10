@@ -1,6 +1,7 @@
 package ee.bcs.valiit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,16 +12,24 @@ public class BankService {
     @Autowired
     private BankRepository bankRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     //TEE UUS ACCOUNT
     public void newAccountService(Account account) {
 
         bankRepository.newAccountRepository(account);
 
-    }
 
+    }
+    //TEE UUS KlIENT
     public void newClientService(Client client) {
 
-        bankRepository.newClientRepository(client);
+
+        String encodedPassword = passwordEncoder.encode(client.getPassword());
+
+        bankRepository.newClientRepository(client, encodedPassword);
+
 
     }
 
@@ -112,6 +121,11 @@ public class BankService {
         }
 
 
+    }
+
+    public Integer testBalance(String specificAccountNumber) {
+        Integer balance = bankRepository.testBalance(specificAccountNumber);
+        return balance;
     }
 }
 

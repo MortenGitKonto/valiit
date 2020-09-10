@@ -1,4 +1,4 @@
-/*package ee.bcs.valiit.controller;
+package ee.bcs.valiit.controller;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,15 +14,18 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure (HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/","/home").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated()//permitAll()
                 .and()
                 .formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/index.html")
+                .failureUrl("/login.html")
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll();
-                SIIA http.cssfr.disable
+                http.csrf().disable();
         }
 
     @Bean
@@ -30,4 +33,3 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 }
-*/
