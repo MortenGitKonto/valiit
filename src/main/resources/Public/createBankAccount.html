@@ -38,63 +38,7 @@
 
 
     <div class="col-md-25 order-md-25">
-        <h4 class="mb-3">Become a Client here!</h4>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="inputUsernameForCreateClient">Create Username</label>
-                <input type="text" class="form-control" id="inputUsernameForCreateClient"
-                       placeholder="username (only text)">
-                <div class="invalid-feedback">
-                    Username is required.
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="inputPasswordForCreateClient">Create Password</label>
-                <input type="text" class="form-control" id="inputPasswordForCreateClient"
-                       placeholder="password (only text)">
-                <div class="invalid-feedback">
-                    Password is required.
-                </div>
-            </div>
-
-
-            <div class="col-md-6 mb-3">
-                <label for="inputNameForCreateClient">Your name</label>
-                <input type="text" class="form-control" id="inputNameForCreateClient" placeholder="First and last name">
-                <div class="invalid-feedback">
-                    Name is required.
-                </div>
-            </div>
-        </div>
-        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
-        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
-        <br>
-        <button id="buttonCreateClient" class="btn btn-primary btn-lg">
-            Become a client!
-        </button>
-        <br>
-
-        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
-        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
-
-
-        <span id='messagesCreateClient'></span>
-        <br>
-
-
-
-        <div>
-            <a href="login.html">Kui klient loodud, logi sisse!</a>
-        </div>
-        <br>
-        <br>
-        <br>
-        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
-        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
-
-        <h4 class="mb-3">Create Your Bank Account!</h4>
+        <h4 class="mb-3">Start your bank account here!</h4>
 
         <div class="row">
             <div class="col-md-6 mb-3">
@@ -120,6 +64,36 @@
                 </div>
             </div>
         </div>
+        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
+        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
+        <br>
+        <button id="buttonCreateAccount" class="btn btn-primary btn-lg">
+            Create account
+        </button>
+        <br>
+
+        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
+        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+
+        <span id='messagesCreateAccount'></span>
+        <br>
+
+
+
+        <div>
+<!--            <a href="toCreateBankAccountPage.html">Kui klient loodud, logi sisse!</a>-->
+        </div>
+        <br>
+        <br>
+        <br>
+        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
+        <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+
+
 
 
         <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -127,100 +101,52 @@
 
 
         <br>
-        <button id="buttonCreateAccount" class="btn btn-primary btn-lg">
-            Create account
-        </button>
+
     </div>
     <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
     <!--////////////////////////////////////////////////////////////////////////////////////////////////-->
-    <br>
-    <span id='messagesCreateAccount'></span>
-    <br>
-    <br>
-    <br>
-    <br>
+
 
 
 </div>
-
-
 
 <!--SIIT ALATES SCRIPT - ÜKSKI TAGIGA ASI SIIA EI LÄHE!!!!!!!-->
-</div>
+
 <script>
-
-
-
 //INPUT
-let inputNameForCreateClient = document.getElementById("inputNameForCreateClient");
-let inputUsernameForCreateClient = document.getElementById("inputUsernameForCreateClient");
-let inputPasswordForCreateClient = document.getElementById("inputPasswordForCreateClient");
+let inputClientIdForCreateAcc = document.getElementById("inputClientIdForCreateAccount");
+let inputAccountNrForCreateAccount = document.getElementById("inputAccountNrForCreateAccount");
+let inputBalanceForCreateAccount = document.getElementById("inputBalanceForCreateAccount");
 
 //BUTTON
-let buttonCreateClient = document.getElementById("buttonCreateClient");
+let buttonCreateAccount = document.getElementById("buttonCreateAccount");
 
 //MESSAGE
-let messagesCreateClient = document.getElementById('messagesCreateClient');
+let messagesCreateAccount = document.getElementById('messagesCreateAccount');
 
-buttonCreateClient.addEventListener('click', function(){
-    fetch('/sqlNewClient', {
+buttonCreateAccount.addEventListener('click', function(){
+    fetch('/sqlNewAccount', {
 				method: 'POST',
 				cache: 'no-cache',
 				headers: {
 					'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: inputNameForCreateClient.value,
-                    username: inputUsernameForCreateClient.value,
-                    password: inputPasswordForCreateClient.value
+                    clientId: inputClientIdForCreateAcc.value,
+                    accountNumber: inputAccountNrForCreateAccount.value,
+                    amount: inputBalanceForCreateAccount.value
                 })
 				})
 			.then(function() {
-                messagesCreateClient.innerText = 'Success';
+                messagesCreateAccount.innerText = 'Success';
 			})
 			.catch(function(err) {
                 console.log(err);
-                messagesCreateClient.innerText = 'This does not seem right';
+                messagesCreateAccount.innerText = 'This does not seem right';
 			});
         })
 
-
-
-
-
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <footer class="my-5 pt-5 text-muted text-center text-small">
