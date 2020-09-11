@@ -234,6 +234,39 @@ buttonCreateClient.addEventListener('click', function(){
 
 
 
+
+buttonCreateClient
+
+
+buttonCreateClient.addEventListener('click', function(){
+    fetch('/sqlNewClient', {
+				method: 'POST',
+				cache: 'no-cache',
+				headers: {
+					'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: inputNameForCreateClient.value,
+                    username: inputUsernameForCreateClient.value,
+                    password: inputPasswordForCreateClient.value
+                })
+				})
+			.then(function() {
+                messagesCreateClient.innerText = 'Success';
+			})
+			.catch(function(err) {
+                console.log(err);
+                messagesCreateClient.innerText = 'This does not seem right';
+			});
+        })
+
+buttonCreateAccount.addEventListener('click', function2(){
+
+            document.getElementById("buttonCreateAccount").value="Try logging in now";
+            <a href="createClient.html">Pole kasutajat? Loo konto!</a>asdadas
+        }
+        )
+
 </script>
 
 

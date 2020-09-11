@@ -13,15 +13,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private BankRepository bankRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
     @Override
     public UserDetails loadUserByUsername(String username){
         String password = bankRepository.getPassword(username);
         return User.withUsername(username)
-                .password(passwordEncoder.encode(password))
+                .password(password)
                 .roles("USER").build();
     }
 }
